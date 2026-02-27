@@ -11,8 +11,8 @@ namespace ConnectHolland\CookieConsentBundle\Enum;
 
 class CategoryEnum
 {
-    const CATEGORY_ANALYTICS    = 'analytics';
-    const CATEGORY_TRACKING     = 'tracking';
-    const CATEGORY_MARKETING    = 'marketing';
-    const CATEGORY_SOCIAL_MEDIA = 'social_media';
+    public const CATEGORY_NECESSARY = 'necessary';
+    public const CATEGORY_FUNCTIONAL = 'functional';
+    public const CATEGORY_ANALYTICS = 'analytics';
+    public const CATEGORY_MARKETING = 'marketing';
 }

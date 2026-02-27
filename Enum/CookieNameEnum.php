@@ -11,14 +11,12 @@ namespace ConnectHolland\CookieConsentBundle\Enum;
 
 class CookieNameEnum
 {
-    const COOKIE_CONSENT_NAME = 'Cookie_Consent';
-
-    const COOKIE_CONSENT_KEY_NAME = 'Cookie_Consent_Key';
-
-    const COOKIE_CATEGORY_NAME_PREFIX = 'Cookie_Category_';
+    public const COOKIE_CONSENT_NAME = 'Cookie_Consent';
+    public const COOKIE_CONSENT_KEY_NAME = 'Cookie_Consent_Key';
+    public const COOKIE_CATEGORY_NAME_PREFIX = 'Cookie_Category_';
 
     /**
-     * Get cookie category name.
+     * Get a cookie category name.
      */
     public static function getCookieCategoryName(string $category): string
     {
