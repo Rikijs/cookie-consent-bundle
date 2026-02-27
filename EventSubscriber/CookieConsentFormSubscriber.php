@@ -13,6 +13,7 @@ use ConnectHolland\CookieConsentBundle\Cookie\CookieHandler;
 use ConnectHolland\CookieConsentBundle\Cookie\CookieLogger;
 use ConnectHolland\CookieConsentBundle\Enum\CookieNameEnum;
 use ConnectHolland\CookieConsentBundle\Form\CookieConsentType;
+use Random\RandomException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -24,13 +25,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class CookieConsentFormSubscriber implements EventSubscriberInterface
 {
-
-
     public function __construct(
-        private FormFactoryInterface $formFactory,
-        private CookieLogger $cookieLogger,
-        private CookieHandler $cookieHandler,
-        private bool $useLogger
+        private readonly FormFactoryInterface $formFactory,
+        private readonly CookieLogger $cookieLogger,
+        private readonly CookieHandler $cookieHandler,
+        private readonly bool $useLogger
     ) {}
 
     public static function getSubscribedEvents(): array
@@ -41,7 +40,7 @@ class CookieConsentFormSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Checks if form has been submitted and saves users preferences in cookies by calling the CookieHandler.
+     * Checks if a form has been submitted and saves users' preferences in cookies by calling the CookieHandler.
      */
     public function onResponse(KernelEvent $event): void
     {
@@ -67,6 +66,7 @@ class CookieConsentFormSubscriber implements EventSubscriberInterface
 
     /**
      * Handle form submit.
+     * @throws RandomException
      */
     protected function handleFormSubmit(array $categories, Request $request, Response $response): void
     {
@@ -80,7 +80,8 @@ class CookieConsentFormSubscriber implements EventSubscriberInterface
     }
 
     /**
-     *  Return existing key from cookies or create new one.
+     * Return an existing key from cookies or create a new one.
+     * @throws RandomException
      */
     protected function getCookieConsentKey(Request $request): string
     {
@@ -88,7 +89,7 @@ class CookieConsentFormSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Create cookie consent form.
+     * Create a cookie consent form.
      */
     protected function createCookieConsentForm(): FormInterface
     {
