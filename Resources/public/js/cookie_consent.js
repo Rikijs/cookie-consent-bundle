@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const categoryDetails = document.querySelector(".ch-cookie-consent__category-group");
     const detailsToggle = document.querySelector(".ch-cookie-consent__toggle-details");
 
-    // --- Positionnement du consentement ---
+    // --- Positionsment du consentement ---
     if (cookieConsent?.parentNode.nodeName === "BODY") {
         const height = cookieConsent.offsetHeight;
         const isTop = cookieConsent.classList.contains("ch-cookie-consent--top");
@@ -70,13 +70,17 @@ document.addEventListener("DOMContentLoaded", () => {
                         body: serializeForm(cookieConsentForm, event.target),
                     });
 
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const assertOk = (response) => {
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    };
+                    assertOk(response);
 
                     // log("Form submitted successfully");
                     cookieConsent.style.display = "none";
                     manageBtn?.removeAttribute("style");
                     document.dispatchEvent(new CustomEvent("cookie-consent-form-submit-successful", { detail: event.target }));
-                    window.location.href = window.location.href; // Plus fiable que reload()
+                    //window.location.href = window.location.href; // Plus fiable que reload()
+                    window.location.reload()
                 } catch (error) {
                     // log("Error submitting form:", error);
                     // Optionnel: afficher une erreur à l'utilisateur
