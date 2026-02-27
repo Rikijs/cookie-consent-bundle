@@ -25,27 +25,21 @@ class CHCookieConsentTwigExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'chcookieconsent_isCookieConsentSavedByUser',
-                [$this, 'isCookieConsentSavedByUser']
+                $this->isCookieConsentSavedByUser(...)
             ),
             new TwigFunction(
                 'chcookieconsent_isCategoryAllowedByUser',
-                [$this, 'isCategoryAllowedByUser']
+                $this->isCategoryAllowedByUser(...)
             ),
         ];
     }
 
-    /**
-     * @var CookieChecker
-     */
-    private $cookieChecker;
-
-    public function __construct(CookieChecker $cookieChecker)
+    public function __construct(private readonly CookieChecker $cookieChecker)
     {
-        $this->cookieChecker = $cookieChecker;
     }
 
     /**
-     * Checks if user has sent cookie consent form.
+     * Checks if a user has sent a cookie consent form.
      */
     public function isCookieConsentSavedByUser(): bool
     {
@@ -53,7 +47,7 @@ class CHCookieConsentTwigExtension extends AbstractExtension
     }
 
     /**
-     * Checks if user has given permission for cookie category.
+     * Checks if the user has given permission for the cookie category.
      */
     public function isCategoryAllowedByUser(string $category): bool
     {
