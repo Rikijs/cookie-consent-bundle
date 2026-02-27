@@ -1,3 +1,13 @@
+# Rikijs - Forked Version of Simon Chabrier version
+
+- Removed themes
+- Removed position option
+- Removed simplified option
+- Added `necessary` cookies (always active type)
+- Using following cookies: `functional`, `analytics`, `marketing`
+- Removed following cookies: `social_media`, `tracking`
+- Copy `cookie-consent_controller.js` _stimulus controller_ inside your _assets_ folder 
+
 # Simon Chabrier - Forked Version: 1.0.0 compatible with Symfony 7.* and PHP 8.*
 
 - This fork modernizes and adapts the original ConnectHolland CookieConsentBundle to be fully compatible with Symfony 7 and PHP 8.2+. The following improvements have been made:
