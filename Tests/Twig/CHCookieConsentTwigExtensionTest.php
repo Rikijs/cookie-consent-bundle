@@ -11,6 +11,7 @@ namespace ConnectHolland\CookieConsentBundle\Tests\Twig;
 
 use ConnectHolland\CookieConsentBundle\Cookie\CookieChecker;
 use ConnectHolland\CookieConsentBundle\Twig\CHCookieConsentTwigExtension;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class CHCookieConsentTwigExtensionTest extends TestCase
@@ -25,9 +26,9 @@ class CHCookieConsentTwigExtensionTest extends TestCase
      */
     private $cookieChecker;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->cookieChecker                = $this->createMock(CookieChecker::class);
+        $this->cookieChecker = $this->createMock(CookieChecker::class);
         $this->chCookieConsentTwigExtension = new CHCookieConsentTwigExtension($this->cookieChecker);
     }
 
@@ -44,13 +45,13 @@ class CHCookieConsentTwigExtensionTest extends TestCase
     {
         $result  = $this->chCookieConsentTwigExtension->isCookieConsentSavedByUser();
 
-        $this->assertSame($result, false);
+        $this->assertFalse($result);
     }
 
     public function testIsCategoryAllowedByUser(): void
     {
         $result  = $this->chCookieConsentTwigExtension->isCategoryAllowedByUser('analytics');
 
-        $this->assertSame($result, false);
+        $this->assertFalse($result);
     }
 }

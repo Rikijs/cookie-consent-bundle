@@ -22,7 +22,7 @@ class CookieConsentTypeSimplifiedTest extends TypeTestCase
      */
     private $cookieChecker;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->cookieChecker = $this->createMock(CookieChecker::class);
 
@@ -30,14 +30,15 @@ class CookieConsentTypeSimplifiedTest extends TypeTestCase
     }
 
     /**
-     * Test submit of CookieConsentType.
+     * Test submitting of CookieConsentType.
      */
     public function testSubmitValidDate(): void
     {
         $formData = [
-            'analytics'       => 'false',
-            'tracking'        => 'false',
-            'marketing'       => 'false',
+            'necessary' => 'false',
+            'functional' => 'false',
+            'analytics' => 'false',
+            'marketing' => 'false',
             'use_all_cookies' => true,
         ];
 
@@ -46,15 +47,16 @@ class CookieConsentTypeSimplifiedTest extends TypeTestCase
 
         $this->assertTrue($form->isSynchronized());
         $this->assertSame([
-            'analytics'    => 'true',
-            'tracking'     => 'true',
-            'marketing'    => 'true',
+            'necessary' => 'true',
+            'functional' => 'true',
+            'analytics' => 'true',
+            'marketing' => 'true',
         ], $form->getData());
     }
 
     protected function getExtensions(): array
     {
-        $type = new CookieConsentType($this->cookieChecker, ['analytics', 'tracking', 'marketing'], true);
+        $type = new CookieConsentType($this->cookieChecker, ['necessary', 'functional', 'analytics', 'marketing'], true);
 
         return [
             new PreloadedExtension([$type], []),

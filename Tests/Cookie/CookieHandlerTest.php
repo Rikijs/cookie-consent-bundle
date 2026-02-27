@@ -20,7 +20,7 @@ class CookieHandlerTest extends TestCase
      */
     private $response;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->response = new Response();
     }
@@ -34,21 +34,24 @@ class CookieHandlerTest extends TestCase
 
         $cookies = $this->response->headers->getCookies();
 
-        $this->assertCount(5, $cookies);
+        $this->assertCount(6, $cookies);
 
         $this->assertSame('Cookie_Consent', $cookies[0]->getName());
 
         $this->assertSame('Cookie_Consent_Key', $cookies[1]->getName());
         $this->assertSame('key-test', $cookies[1]->getValue());
 
-        $this->assertSame('Cookie_Category_analytics', $cookies[2]->getName());
+        $this->assertSame('Cookie_Category_necessary', $cookies[2]->getName());
         $this->assertSame('true', $cookies[2]->getValue());
 
-        $this->assertSame('Cookie_Category_social_media', $cookies[3]->getName());
+        $this->assertSame('Cookie_Category_functional', $cookies[3]->getName());
         $this->assertSame('true', $cookies[3]->getValue());
 
-        $this->assertSame('Cookie_Category_tracking', $cookies[4]->getName());
-        $this->assertSame('false', $cookies[4]->getValue());
+        $this->assertSame('Cookie_Category_analytics', $cookies[4]->getName());
+        $this->assertSame('true', $cookies[4]->getValue());
+
+        $this->assertSame('Cookie_Category_marketing', $cookies[5]->getName());
+        $this->assertSame('true', $cookies[5]->getValue());
     }
 
     /**
@@ -58,7 +61,7 @@ class CookieHandlerTest extends TestCase
     {
         $this->saveCookieHandler(false);
         $cookies = $this->response->headers->getCookies();
-        $this->assertSame(false, $cookies[4]->isHttpOnly());
+        $this->assertFalse($cookies[4]->isHttpOnly());
     }
 
     /**
@@ -68,7 +71,7 @@ class CookieHandlerTest extends TestCase
     {
         $this->saveCookieHandler(true);
         $cookies = $this->response->headers->getCookies();
-        $this->assertSame(true, $cookies[4]->isHttpOnly());
+        $this->assertTrue($cookies[4]->isHttpOnly());
     }
 
     /**
@@ -79,9 +82,10 @@ class CookieHandlerTest extends TestCase
         $cookieHandler = new CookieHandler($httpOnly);
 
         $cookieHandler->save([
-            'analytics'    => 'true',
-            'social_media' => 'true',
-            'tracking'     => 'false',
+            'necessary' => 'true',
+            'functional' => 'true',
+            'analytics' => 'true',
+            'marketing' => 'true',
         ], 'key-test', $this->response);
     }
 }

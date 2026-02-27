@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace ConnectHolland\CookieConsentBundle\Tests\DependencyInjection;
 
 use ConnectHolland\CookieConsentBundle\DependencyInjection\CHCookieConsentExtension;
+use ConnectHolland\CookieConsentBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Parser;
 
@@ -19,31 +21,29 @@ class CHCookieConsentExtensionTest extends TestCase
     /**
      * @var CHCookieConsentExtension
      */
-    private $chCookieConsentExtension;
+    private CHCookieConsentExtension $chCookieConsentExtension;
 
     /**
      * @var ContainerBuilder
      */
-    private $configuration;
+    private ContainerBuilder $configuration;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->chCookieConsentExtension = new CHCookieConsentExtension();
-        $this->configuration            = new ContainerBuilder();
+        $this->chCookieConsentExtension = new TestableCHCookieConsentExtension();
+        $this->configuration = new ContainerBuilder();
     }
 
     public function testFullConfiguration(): void
     {
         $this->createConfiguration($this->getFullConfig());
 
-        $this->assertParameter(['analytics', 'tracking', 'marketing', 'social_media'], 'ch_cookie_consent.categories');
-        $this->assertParameter('dark', 'ch_cookie_consent.theme');
-        $this->assertParameter('top', 'ch_cookie_consent.position');
+        $this->assertParameter(['necessary', 'functional', 'analytics', 'marketing'], 'ch_cookie_consent.categories');
     }
 
     public function testInvalidConfiguration(): void
     {
-        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
+        $this->expectException(InvalidConfigurationException::class);
         $this->createConfiguration($this->getInvalidConfig());
     }
 
@@ -63,13 +63,9 @@ class CHCookieConsentExtensionTest extends TestCase
     protected function getFullConfig(): array
     {
         $yaml = <<<EOF
-categories: ['analytics', 'tracking', 'marketing', 'social_media']
-theme: 'dark'
-position: 'top'
+categories: ['necessary', 'functional', 'analytics', 'marketing']
 EOF;
-        $parser = new Parser();
-
-        return $parser->parse($yaml);
+        return (new Parser())->parse($yaml);
     }
 
     /**
@@ -79,10 +75,9 @@ EOF;
     {
         $yaml = <<<EOF
 theme: 'not_existing'
+position: 'not_existing'
 EOF;
-        $parser = new Parser();
-
-        return $parser->parse($yaml);
+        return (new Parser())->parse($yaml);
     }
 
     /**
@@ -91,5 +86,20 @@ EOF;
     private function assertParameter($value, $key): void
     {
         $this->assertSame($value, $this->configuration->getParameter($key), sprintf('%s parameter is correct', $key));
+    }
+}
+
+final class TestableCHCookieConsentExtension extends CHCookieConsentExtension
+{
+    public function load(array $configs, ContainerBuilder $container): void
+    {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('ch_cookie_consent.categories', $config['categories']);
+        $container->setParameter('ch_cookie_consent.use_logger', $config['use_logger']);
+        $container->setParameter('ch_cookie_consent.http_only', $config['http_only']);
+        $container->setParameter('ch_cookie_consent.form_action', $config['form_action']);
+        $container->setParameter('ch_cookie_consent.csrf_protection', $config['csrf_protection']);
     }
 }

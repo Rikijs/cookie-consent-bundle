@@ -28,12 +28,12 @@ class CookieLoggerTest extends TestCase
     /**
      * @var MockObject
      */
-    private $requestStack;
+    private $request;
 
     /**
      * @var MockObject
      */
-    private $request;
+    private $requestStack;
 
     /**
      * @var MockObject
@@ -45,12 +45,12 @@ class CookieLoggerTest extends TestCase
      */
     private $cookieLogger;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->registry           = $this->createMock(ManagerRegistry::class);
-        $this->requestStack       = $this->createMock(RequestStack::class);
-        $this->request            = $this->createMock(Request::class);
-        $this->entityManager      = $this->createMock(EntityManagerInterface::class);
+        $this->registry = $this->createMock(ManagerRegistry::class);
+        $this->requestStack = $this->createMock(RequestStack::class);
+        $this->request = $this->createMock(Request::class);
+        $this->entityManager = $this->createMock(EntityManagerInterface::class);
 
         $this->requestStack
             ->expects($this->any())
@@ -90,6 +90,12 @@ class CookieLoggerTest extends TestCase
             'social_media' => 'true',
             'tracking'     => 'false',
         ], 'key-test');
+
+        /*$this->cookieLogger->log([
+            'necessary' => 'true',
+            'functional' => 'true',
+            'analytics' => 'false',
+        ], 'key-test');*/
     }
 
     /**

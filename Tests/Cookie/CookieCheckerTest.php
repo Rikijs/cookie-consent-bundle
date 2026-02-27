@@ -10,21 +10,22 @@ declare(strict_types=1);
 namespace ConnectHolland\CookieConsentBundle\Tests\Cookie;
 
 use ConnectHolland\CookieConsentBundle\Cookie\CookieChecker;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class CookieCheckerTest extends TestCase
 {
     /**
-     * @var MockObject
+     * @var Stub
      */
     private $request;
 
     /**
-     * @var MockObject
+     * @var Stub
      */
     private $requestStack;
 
@@ -33,10 +34,10 @@ class CookieCheckerTest extends TestCase
      */
     private $cookieChecker;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->requestStack       = $this->createMock(RequestStack::class);
-        $this->request            = $this->createMock(Request::class);
+        $this->requestStack = $this->createStub(RequestStack::class);
+        $this->request = $this->createStub(Request::class);
 
         $this->requestStack
             ->expects($this->any())
@@ -46,14 +47,10 @@ class CookieCheckerTest extends TestCase
         $this->cookieChecker = new CookieChecker($this->requestStack);
     }
 
-    /**
-     * @dataProvider isCookieConsentSavedByUserDataProvider
-     *
-     * Test CookieChecker:isCookieConsentSavedByUser
-     */
+    #[DataProvider('isCookieConsentSavedByUserDataProvider')]
     public function testIsCookieConsentSavedByUser(array $cookies = [], bool $expected = false): void
     {
-        $this->request->cookies = new ParameterBag($cookies);
+        $this->request->cookies = new InputBag($cookies);
 
         $this->assertSame($expected, $this->cookieChecker->isCookieConsentSavedByUser());
     }
@@ -61,7 +58,7 @@ class CookieCheckerTest extends TestCase
     /**
      * Data provider for testIsCookieConsentSavedByUser.
      */
-    public function isCookieConsentSavedByUserDataProvider(): array
+    public static function isCookieConsentSavedByUserDataProvider(): array
     {
         return [
             [['Cookie_Consent' => date('r')], true],
@@ -73,14 +70,10 @@ class CookieCheckerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider isCategoryAllowedByUserDataProvider
-     *
-     * Test CookieChecker:isCategoryAllowedByUser
-     */
+    #[DataProvider('isCategoryAllowedByUserDataProvider')]
     public function testIsCategoryAllowedByUser(array $cookies = [], string $category = '', bool $expected = false): void
     {
-        $this->request->cookies = new ParameterBag($cookies);
+        $this->request->cookies = new InputBag($cookies);
 
         $this->assertSame($expected, $this->cookieChecker->isCategoryAllowedByUser($category));
     }
@@ -88,9 +81,11 @@ class CookieCheckerTest extends TestCase
     /**
      * Data provider for testIsCategoryAllowedByUser.
      */
-    public function isCategoryAllowedByUserDataProvider(): array
+    public static function isCategoryAllowedByUserDataProvider(): array
     {
         return [
+            [['Cookie_Category_necessary' => 'true'], 'necessary', true],
+            [['Cookie_Category_functional' => 'true'], 'functional', true],
             [['Cookie_Category_analytics' => 'true'], 'analytics', true],
             [['Cookie_Category_marketing' => 'true'], 'marketing', true],
             [['Cookie_Category_analytics' => 'false'], 'analytics', false],
