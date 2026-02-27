@@ -23,7 +23,7 @@ class CookieLogger
 
     public function __construct(
         ManagerRegistry $registry,
-        private RequestStack $requestStack
+        private readonly RequestStack $requestStack
     ) {
         $this->entityManager = $registry->getManagerForClass(CookieConsentLog::class);
     }
