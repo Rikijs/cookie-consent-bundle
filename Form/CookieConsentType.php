@@ -23,16 +23,13 @@ class CookieConsentType extends AbstractType
     /**
      * @param CookieChecker $cookieChecker
      * @param array<string> $cookieCategories
-     * @param bool          $cookieConsentSimplified
-     * @param bool          $csrfProtection
+     * @param bool $csrfProtection
      */
     public function __construct(
         protected CookieChecker $cookieChecker,
         protected array $cookieCategories,
-        protected bool $cookieConsentSimplified = false,
         protected bool $csrfProtection = true
     ) {}
-
 
     /**
      * Build the cookie consent form.
@@ -41,12 +38,10 @@ class CookieConsentType extends AbstractType
     {
         foreach ($this->cookieCategories as $category) {
             $builder->add($category, CheckboxType::class, [
-                'required'  => false,
-                'data'      => $this->cookieChecker->isCookieConsentSavedByUser()
-                    ? $this->cookieChecker->isCategoryAllowedByUser($category)
-                    : true,
-                'label_attr' => ['class' => 'checkbox-switch'],
-                'attr'       => ['class' => 'form-check-input'],
+                'required' => false,
+                'data' => $category === 'necessary' || ($this->cookieChecker->isCookieConsentSavedByUser() && $this->cookieChecker->isCategoryAllowedByUser($category)),
+                'label_attr' => ['class' => 'checkbox-switch ms-3'],
+                'attr'=> $category === 'necessary' ? ['class' => 'form-check-input switch-success', 'disabled' => 'disabled'] : ['class' => 'form-check-input'],
             ]);
         }
 
@@ -54,33 +49,18 @@ class CookieConsentType extends AbstractType
             $data = $event->getData();
 
             foreach ($this->cookieCategories as $category) {
+                if ($category === 'necessary') {
+                    $data[$category] = 'true';
+                    continue;
+                }
                 $data[$category] = ($data[$category] ?? false) ? 'true' : 'false';
             }
 
             $event->setData($data);
         });
 
-        if ($this->cookieConsentSimplified === false) {
-            $builder->add('save', SubmitType::class, ['label' => 'ch_cookie_consent.save', 'attr' => ['class' => 'btn ch-cookie-consent__btn']]);
-        } else {
-            $builder->add('use_only_functional_cookies', SubmitType::class, ['label' => 'ch_cookie_consent.use_only_functional_cookies', 'attr' => ['class' => 'btn ch-cookie-consent__btn']]);
-            $builder->add('use_all_cookies', SubmitType::class, ['label' => 'ch_cookie_consent.use_all_cookies', 'attr' => ['class' => 'btn ch-cookie-consent__btn ch-cookie-consent__btn--secondary']]);
-
-            $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-                $data = $event->getData();
-
-                foreach ($this->cookieCategories as $category) {
-                    $data[$category] = isset($data['use_all_cookies']) ? 'true' : 'false';
-                }
-
-                $event->setData($data);
-            });
-        }
+        $builder->add('save', SubmitType::class, ['label' => 'ch_cookie_consent.save', 'attr' => ['class' => 'btn btn-primary mt-3 ch-cookie-consent__btn']]);
     }
-
-
-
-
 
     /**
      * Default options.
@@ -89,7 +69,13 @@ class CookieConsentType extends AbstractType
     {
         $resolver->setDefaults([
             'translation_domain' => 'CHCookieConsentBundle',
-            'csrf_protection'    => $this->csrfProtection,
+            'csrf_protection' => $this->csrfProtection,
         ]);
     }
 }
+
+/*
+ * 'data' => $category === 'necessary' ? true : ($this->cookieChecker->isCookieConsentSavedByUser()
+ *  ? $this->cookieChecker->isCategoryAllowedByUser($category)
+ *  : false),
+*/
