@@ -23,31 +23,25 @@ use Twig\Environment;
 class CookieConsentController
 {
     public function __construct(
-        private Environment $twigEnvironment,
-        private FormFactoryInterface $formFactory,
-        private CookieChecker $cookieChecker,
-        private RouterInterface $router,
-        private string $cookieConsentTheme,
-        private string $cookieConsentPosition,
-        private TranslatorInterface $translator,
-        private bool $cookieConsentSimplified = false,
-        private ?string $formAction = null
+        private readonly Environment $twigEnvironment,
+        private readonly FormFactoryInterface $formFactory,
+        private readonly CookieChecker $cookieChecker,
+        private readonly RouterInterface $router,
+        private readonly TranslatorInterface $translator,
+        private readonly ?string $formAction = null
     ) {}
 
     /**
      * Show cookie consent.
      */
-    #[Route('/cookie_consent', name: 'ch_cookie_consent.show')]
+    #[Route(path: '/cookie_consent', name: 'ch_cookie_consent.show')]
     public function show(Request $request): Response
     {
         $this->setLocale($request);
 
         $response = new Response(
             $this->twigEnvironment->render('@CHCookieConsent/cookie_consent.html.twig', [
-                'form'       => $this->createCookieConsentForm()->createView(),
-                'theme'      => $this->cookieConsentTheme,
-                'position'   => $this->cookieConsentPosition,
-                'simplified' => $this->cookieConsentSimplified,
+                'form' => $this->createCookieConsentForm()->createView(),
             ])
         );
 
@@ -68,7 +62,7 @@ class CookieConsentController
     }
 
     /**
-     * Create cookie consent form.
+     * Create a cookie consent form.
      */
     protected function createCookieConsentForm(): FormInterface
     {
@@ -88,12 +82,13 @@ class CookieConsentController
     }
 
     /**
-     * Set locale if available as GET parameter.
+     * Set locale if available as a GET parameter.
      */
     protected function setLocale(Request $request)
     {
-        $locale = $request->get('locale');
+        $locale = $request->attributes->get('locale');
         if (empty($locale) === false) {
+            $this->translator->setLocale($locale);
             $request->setLocale($locale);
         }
     }
