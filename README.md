@@ -8,6 +8,21 @@
 - Removed following cookies: `social_media`, `tracking`
 - Copy `cookie-consent_controller.js` _stimulus controller_ inside your _assets_ folder 
 
+### override Step 4: Configure to your needs
+Configure your Cookie Consent with the following possible settings
+```yaml
+ch_cookie_consent:
+    categories: # Below are the default supported categories
+        - 'necessary'
+        - 'functional'
+        - 'analytics'
+        - 'marketing'
+    use_logger: true # Logs user actions to database
+    http_only: true # Sets HttpOnly on cookies
+    form_action: $routeName # When set, xhr-Requests will only be sent to this route. Take care of having the route available.
+    csrf_protection: true # The cookie consent form is csrf protected or not
+```
+
 # Simon Chabrier - Forked Version: 1.0.0 compatible with Symfony 7.* and PHP 8.*
 
 - This fork modernizes and adapts the original ConnectHolland CookieConsentBundle to be fully compatible with Symfony 7 and PHP 8.2+. The following improvements have been made:
