@@ -6,7 +6,7 @@ ch_cookie_consent:
     read_more_ORIG: 'Learn more about the cookies we use in our privacy policy.'
     necessary:
         name: 'Necessary cookies'
-        title: 'The necessary cookies are always enabled!'
+        title: 'The necessary cookies. They are always enabled!'
         descriptionShort: 'Cookies that are always enabled - are necessary to navigate the site, use its features, and for identification purposes.'
         description: 'Necessary cookies are essential and allow you to access various sections of the website. These cookies are stored on your computer, smartphone, tablet, or other device during your visit and browsing of the website or for a specified period of time. These cookies are necessary for the website to function and cannot be disabled, and therefore user consent is not required for this category of cookies.'
     functional:

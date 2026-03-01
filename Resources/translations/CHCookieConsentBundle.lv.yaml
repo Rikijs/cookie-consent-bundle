@@ -6,7 +6,7 @@ ch_cookie_consent:
     read_more_ORIG: 'Uzzināt vairāk par sīkdatnēm, ko mēs lietojam sadaļā: privātuma politika.'
     necessary:
         name: 'Nepieciešamās sīkdatnes'
-        title: 'Nepieciešamās sīkdatnes ir vienmēr iespējotas!'
+        title: 'Nepieciešamās sīkdatnes. Tās ir vienmēr iespējotas!'
         descriptionShort: 'Sīkdatnes, kas ir vienmēr iespējotas - ir nepieciešamas, lai varētu pārvietoties vietnē, izmantot tās sniegtās iespējas kā arī identificēties.'
         description: 'Nepieciešamās sīkdatnes ir būtiskas, un tās Jums ļauj piekļūt dažādām tīmekļa vietnes sadaļām. Šīs sīkdatnes tiek saglabātas Jūsu datorā, viedtālrunī, planšetdatorā vai citā ierīcē vietnes apmeklējuma un pārlūkošanas laikā vai noteiktā laika periodā. Šīs sīkdatnes ir nepieciešamas tīmekļa vietnes darbībai, tāpēc tās nevar izslēgt, un tādēļ lietotāja piekrišana šai sīkdatņu kategorijai netiek prasīta.'
     functional:
@@ -21,7 +21,7 @@ ch_cookie_consent:
         description: 'Analītiskās sīkdatnes ļauj uzskaitīt apmeklējumu skaitu un avotus, lai mēs varētu izmērīt un uzlabot vietnes darbību. Tās palīdz saprast, kuras lapas ir visiecienītākās un kuras tiek izmantotas visretāk, kā arī to, kā apmeklētāji pārvietojas vietnē. Ar šo sīkdatņu palīdzību tiek iegūta anonīma informācija par apmeklētāja darbībām vietnē (piemēram, apmeklētā lapa, apmeklējuma datums un laiks), kas tiek izmantota statistikai un analīzei, atbilstoši noteiktajiem nolūkiem. Ja atteiksieties no šo sīkdatņu izmantošanas, Jūsu apmeklējums netiks iekļauts statistikā, bet vienlaikus neierobežos Jūsu darbības vietnē.'
     marketing:
         name: 'Mārketinga/izsekošanas sīkdatnes'
-        title: 'Mārketinga/izsekošanas sīkdatnes. Vai vēlaties iespējot, lai pielāgotu reklāmas?'
+        title: 'Mārketinga/izsekošanas sīkdatnes. Vai vēlaties tās iespējot, lai pielāgotu reklāmas?'
         descriptionShort: 'Mārketinga sīkdatnes, kas pazīstamas arī kā reklāmas vai izsekošanas sīkdatnes, galvenokārt tiek izmantotas, lai izsekotu lietotāju darbības tiešsaistē un parādītu viņiem personalizētas reklāmas, pamatojoties uz viņu interesēm.'
         description: 'Mārketinga sīkdatnes, kas pazīstamas arī kā reklāmas vai izsekošanas sīkdatnes, apkopo informāciju par Jūsu paradumiem, izveidojot apmeklētāja profilu, un rādītu Jūsu izrādītajai interesei atbilstošus piedāvājumus. Šīs sīkdatnes tiek izmantotas, lai palīdzētu nodrošināt Jums pielāgotu informāciju un analizētu datu plūsmu, kā arī tās satur sociālo mediju sīkdatnes, kas ļauj dalīties ar saturu sociālajos tīklos. Informācija, ko ievāc trešās personas, var ietvert tādus datus kā, piemēram, ģeogrāfiskā novietojuma dati (nosaka pēc IP adreses).'
     no: 'Nē'
