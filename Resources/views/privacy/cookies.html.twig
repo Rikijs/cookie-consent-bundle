@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Privacy Cookies{% endblock %}
+
+{% block body %}
+    <div class="p-3">
+        <div class="ch-cookie-consent-holder p-3">
+            {% if chcookieconsent_isCookieConsentSavedByUser() == false %}
+                {% include '@CHCookieConsent/privacy/_cookie_consent_header.html.twig' %}
+
+                <p class="text-dark fst-italic">{{- 'ch_cookie_consent.cookies_settings_are_not_saved_yet'|trans({}, 'CHCookieConsentBundle') -}}</p>
+                <p class="text-dark">{{- 'ch_cookie_consent.adjust_consent_in_this_section'|trans({}, 'CHCookieConsentBundle') -}}</p>
+
+                {{ render_esi(path('ch_cookie_consent.show_if_cookie_consent_not_set', { '_locale': app.locale })) }}
+            {% else %}
+                {% include '@CHCookieConsent/privacy/_cookie_consent_header.html.twig' %}
+
+                <p class="text-dark mb-0">{{- 'ch_cookie_consent.chosen_cookies_at_the_moment_are'|trans({}, 'CHCookieConsentBundle') -}}</p>
+
+                <div class="p-3">
+                    <ul>
+                        {% if chcookieconsent_isCategoryAllowedByUser('necessary') == true %}
+                            <li><p class="text-success mb-0">{{- 'ch_cookie_consent.necessary.name'|trans({}, 'CHCookieConsentBundle') -}}</p></li>
+                        {% endif %}
+                        {% if chcookieconsent_isCategoryAllowedByUser('functional') == true %}
+                            <li><p class="text-success mb-0">{{- 'ch_cookie_consent.functional.name'|trans({}, 'CHCookieConsentBundle') -}}</p></li>
+                        {% endif %}
+                        {% if chcookieconsent_isCategoryAllowedByUser('analytics') == true %}
+                            <li><p class="text-success mb-0">{{- 'ch_cookie_consent.analytics.name'|trans({}, 'CHCookieConsentBundle') -}}</p></li>
+                        {% endif %}
+                        {% if chcookieconsent_isCategoryAllowedByUser('marketing') == true %}
+                            <li><p class="text-success mb-0">{{- 'ch_cookie_consent.marketing.name'|trans({}, 'CHCookieConsentBundle') -}}</p></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div {{ stimulus_controller('cookie-consent-toggle') }}>
+                    <button class="btn btn-secondary" data-action="cookie-consent-toggle#modifyConsent">
+                        {{- 'ch_cookie_consent.adjust_consent'|trans({}, 'CHCookieConsentBundle') -}}
+                    </button>
+
+                    <div class="mt-3" data-cookie-consent-toggle-target="consentToggle" style="display: none;">
+                        {{ render_esi(path('ch_cookie_consent.show', { '_locale': app.locale })) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
