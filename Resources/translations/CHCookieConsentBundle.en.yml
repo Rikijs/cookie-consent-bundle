@@ -1,6 +1,7 @@
 ch_cookie_consent:
     title: 'Cookies on our website.'
-    intro: 'This website uses cookies to improve the user experience. By using our website, you agree to the use of cookies in accordance with our cookie policy.'
+    intro1: 'This website uses cookies to improve the user experience.'
+    intro2: 'By using our website, you agree to the use of necessary cookies and types of cookies that you chose (in accordance with our privacy policy).'
     read_more_start: 'Learn more about the cookies we use in our:'
     read_more_end: 'privacy policy'
     read_more_ORIG: 'Learn more about the cookies we use in our privacy policy.'
