@@ -1,12 +1,17 @@
 # Rikijs - Forked Version of Simon Chabrier version
 
+### info:
+- install this bundle manually, there is no flex recipe for this bundle at the moment
+- Copy `cookie-consent_controller.js` _stimulus controller_ inside your _assets_ folder
+- Copy twig files from `privacy` folder into your templates folder for fast implementation
+
+### changes:
 - Removed themes
 - Removed position option
 - Removed simplified option
 - Added `necessary` cookies (always active type)
 - Using following cookies: `functional`, `analytics`, `marketing`
 - Removed following cookies: `social_media`, `tracking`
-- Copy `cookie-consent_controller.js` _stimulus controller_ inside your _assets_ folder 
 
 ### override Step 4: Configure to your needs
 Configure your Cookie Consent with the following possible settings
