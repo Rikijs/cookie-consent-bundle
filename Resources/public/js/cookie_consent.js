@@ -1,4 +1,5 @@
-// alert("cookie_consent.js loaded");
+// DEPRECATED, USE "cookie-consent_controller.js"
+alert("cookie_consent.js loaded");
 // --- Helpers ---
 const log = (...args) => console.log("[CookieConsent]", ...args);
 const serializeForm = (form, clickedButton) => {
