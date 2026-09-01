@@ -23,12 +23,12 @@ use Twig\Environment;
 class CookieConsentController
 {
     public function __construct(
-        private readonly Environment $twigEnvironment,
-        private readonly FormFactoryInterface $formFactory,
-        private readonly CookieChecker $cookieChecker,
-        private readonly RouterInterface $router,
-        private readonly TranslatorInterface $translator,
-        private readonly ?string $formAction = null
+        protected readonly Environment $twigEnvironment,
+        protected readonly FormFactoryInterface $formFactory,
+        protected readonly CookieChecker $cookieChecker,
+        protected readonly RouterInterface $router,
+        protected readonly TranslatorInterface $translator,
+        protected readonly ?string $formAction = null
     ) {}
 
     /**
@@ -84,7 +84,7 @@ class CookieConsentController
     /**
      * Set locale if available as a GET parameter.
      */
-    protected function setLocale(Request $request)
+    protected function setLocale(Request $request): void
     {
         $locale = $request->attributes->get('locale');
         if (empty($locale) === false) {
