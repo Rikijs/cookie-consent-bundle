@@ -13,7 +13,7 @@ ch_cookie_consent:
     functional:
         name: 'Funkcionālās/iestatījumu sīkdatnes'
         title: 'Funkcionālās/iestatījumu sīkdatnes. Vai vēlaties tās iespējot?'
-        descriptionShort: 'Šīs sīkdatnes ļauj mūsu vietnei atcerēties Jūsu veiktās izvēles (piemēram, lietotāja vārdu, lietoto valodu, laika joslu u.tml.), kā arī nodrošināt uzlabotas, personalizētākas iespējas.'
+        descriptionShort: 'Šīs sīkdatnes ļauj mūsu vietnei atcerēties Jūsu veiktās izvēles (piemēram, lietotāja vārdu, lietoto valodu, laika joslu u.tml.), kā arī nodrošināt uzlabotas, personalizētas iespējas.'
         description: 'Funkcionālās sīkdatnes, ko sauc arī par funkcionalitātes sīkdatnēm, ir sīkdatnes, kas tiek izmantotas, lai uzlabotu tīmekļa vietnes veiktspēju un funkcionalitāti. Bez tām dažas tīmekļa vietnes funkcijas var nebūt pieejamas. Tās tiek izmantotas, lai atcerētos lietotāja izvēles un iestatījumus (piemēram, lietotāja vārdu, lietoto valodu, laika joslu u.tml.), lai uzlabotu pārlūkošanas pieredzi.'
     analytics:
         name: 'Analītiskās/veiktspējas sīkdatnes'
@@ -28,6 +28,8 @@ ch_cookie_consent:
     no: 'Nē'
     yes: 'Jā'
     save: 'Saglabāt manu izvēli'
+    reject_all_cookies: 'Noraidīt visas sīkdatnes'
+    delete_all_cookies: 'Dzēst visas sīkdatnes'
     change: 'Mainīt izvēli'
     use_only_necessary_cookies: 'Lietot tikai nepieciešamās sīkdatnes'
     use_only_functional_cookies: 'Lietot tikai funkcionalās sīkdatnes'

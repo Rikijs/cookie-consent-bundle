@@ -28,6 +28,8 @@ ch_cookie_consent:
     no: 'No'
     yes: 'Yes'
     save: 'Save my choice'
+    reject_all_cookies: 'Reject all cookies'
+    delete_all_cookies: 'Delete all cookies'
     change: 'Change selection'
     use_only_necessary_cookies: 'Only use necessary cookies'
     use_only_functional_cookies: 'Only use functional cookies'
