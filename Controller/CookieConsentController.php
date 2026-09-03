@@ -20,15 +20,15 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-class CookieConsentController
+readonly class CookieConsentController
 {
     public function __construct(
-        protected readonly Environment $twigEnvironment,
-        protected readonly FormFactoryInterface $formFactory,
-        protected readonly CookieChecker $cookieChecker,
-        protected readonly RouterInterface $router,
-        protected readonly TranslatorInterface $translator,
-        protected readonly ?string $formAction = null
+        protected Environment          $twigEnvironment,
+        protected FormFactoryInterface $formFactory,
+        protected CookieChecker        $cookieChecker,
+        protected RouterInterface      $router,
+        protected TranslatorInterface  $translator,
+        protected ?string              $formAction = null
     ) {}
 
     /**
