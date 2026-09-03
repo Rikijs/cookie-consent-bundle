@@ -60,7 +60,7 @@ class CookieConsentType extends AbstractType
         });
 
         $builder->add('save', SubmitType::class, ['label' => 'ch_cookie_consent.save', 'attr' => ['class' => 'btn btn-primary mt-3 ch-cookie-consent__btn']]);
-        $builder->add('delete', SubmitType::class, ['label' => 'ch_cookie_consent.delete_all_cookies', 'attr' => ['class' => 'btn btn-primary mt-3 ch-cookie-consent__btn']]);
+        $builder->add('reject', SubmitType::class, ['label' => 'ch_cookie_consent.reject_all_cookies', 'attr' => ['class' => 'btn btn-primary mt-3 ch-cookie-consent__btn']]);
     }
 
     /**
