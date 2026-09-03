@@ -78,7 +78,7 @@ export default class extends Controller {
         return new URLSearchParams(formData).toString();
     }
 
-    deleteAllCookies() {
+    rejectAllCookies() {
         document.cookie.split(';').forEach(cookie => {
             const eqPos = cookie.indexOf('=');
             const name = eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim();
