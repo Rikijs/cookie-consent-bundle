@@ -5,7 +5,7 @@ import { Controller } from '@hotwired/stimulus';
  * Handles the display and submission of the cookie consent.
  */
 export default class extends Controller {
-    static targets = ['cookieContainer', "cookieForm", 'cookieCategoryDetails', 'toggleHide', 'toggleShow'];
+    static targets = ['cookieContainer', 'cookieForm', 'cookieCategoryDetails', 'toggleHide', 'toggleShow'];
     static values = {
         submitSuccessEvent: { type: String, default: 'cookie-consent-form-submit-successful' }
     }
