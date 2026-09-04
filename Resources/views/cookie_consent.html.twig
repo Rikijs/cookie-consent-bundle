@@ -20,7 +20,9 @@
         </div>
         <div class="ch-cookie-consent__btn-group mt-3">
             {% for child in form %}
-                {% if child.vars.block_prefixes[0] == 'button' %}
+                {{ dump(child.vars.block_prefixes[0]) }}
+
+                {% if child.vars.block_prefixes[0] === 'button' %}
                     {% if (loop.index === 1) %}
                         {{ form_widget(child, {
                             'attr': {
