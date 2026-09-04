@@ -13,14 +13,13 @@
     }) }}
         <div class="ch-cookie-consent__category-group" data-cookie-consent-target="cookieCategoryDetails">
             {% for child in form %}
-                {% if child.vars.block_prefixes[0] != 'button' %}
+                {% if child.vars.block_prefixes[0] !== 'button' %}
                     {{ form_row(child) }}
                 {% endif %}
             {% endfor %}
         </div>
         <div class="ch-cookie-consent__btn-group mt-3">
             {% for child in form %}
-                {{ dump(child.vars) }}
                 {% if child.vars.block_prefixes[0] === 'button' %}
                     {{ form_widget(child, {
                         'attr': {

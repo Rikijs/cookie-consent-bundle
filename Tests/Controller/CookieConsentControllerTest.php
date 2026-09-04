@@ -56,11 +56,11 @@ class CookieConsentControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->templating              = $this->createMock(Environment::class);
-        $this->formFactory             = $this->createMock(FormFactoryInterface::class);
-        $this->cookieChecker           = $this->createMock(CookieChecker::class);
-        $this->translator              = $this->getMockBuilder(TranslatorInterface::class)->addMethods(['setLocale'])->getMockForAbstractClass();
-        $this->router                  = $this->createMock(RouterInterface::class);
+        $this->templating = $this->createMock(Environment::class);
+        $this->formFactory = $this->createMock(FormFactoryInterface::class);
+        $this->cookieChecker = $this->createMock(CookieChecker::class);
+        $this->translator = $this->getMockBuilder(TranslatorInterface::class)->addMethods(['setLocale'])->getMockForAbstractClass();
+        $this->router = $this->createMock(RouterInterface::class);
         $this->cookieConsentController = new CookieConsentController(
             $this->templating,
             $this->formFactory,
