@@ -23,12 +23,12 @@ use Twig\Environment;
 readonly class CookieConsentController
 {
     public function __construct(
-        protected Environment $twigEnvironment,
+        protected Environment          $twigEnvironment,
         protected FormFactoryInterface $formFactory,
-        protected CookieChecker $cookieChecker,
-        protected RouterInterface $router,
+        protected CookieChecker        $cookieChecker,
+        protected RouterInterface      $router,
         protected TranslatorInterface  $translator,
-        protected ?string $formAction = null
+        protected ?string              $formAction = null
     ) {}
 
     /**
@@ -50,15 +50,6 @@ readonly class CookieConsentController
         $response->setMaxAge(0);
 
         return $response;
-    }
-
-    /**
-     * Reject all cookies.
-     */
-    #[Route(path: '/cookie_reject', name: 'ch_cookie_consent.reject')]
-    public function reject(Request $request): void
-    {
-        $test = 'test-123';
     }
 
     /**
