@@ -25,8 +25,8 @@ class CHCookieConsentExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        //$container->setParameter('ch_cookie_consent.use_logger', $config['use_logger']);
-        //$container->setParameter('ch_cookie_consent.http_only', $config['http_only']);
+        $container->setParameter('ch_cookie_consent.use_logger', $config['use_logger']);
+        $container->setParameter('ch_cookie_consent.http_only', $config['http_only']);
         $container->setParameter('ch_cookie_consent.cookie_categories', $config['cookie_categories']);
         $container->setParameter('ch_cookie_consent.form_action', $config['form_action']);
         $container->setParameter('ch_cookie_consent.csrf_protection', $config['csrf_protection']);

@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->variableNode('categories')
+                ->variableNode('cookie_categories')
                     ->defaultValue(
                         [
                             CategoryEnum::CATEGORY_NECESSARY,

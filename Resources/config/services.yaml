@@ -4,41 +4,48 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        public: false
+
         bind:
-            $cookieCategories: '%ch_cookie_consent.categories%'
             $useLogger: '%ch_cookie_consent.use_logger%'
             $httpOnly: '%ch_cookie_consent.http_only%'
-            $formAction: '%ch_cookie_consent.form_action%'
-            $csrfProtection: '%ch_cookie_consent.csrf_protection%'
-
-    # Controller registration
-    ConnectHolland\CookieConsentBundle\Controller\CookieConsentController:
-        public: true # Controller obligatory need to be public
-        tags:
-            - { name: 'controller.service_arguments' }
-            - { name: 'container.service_subscriber' }
-
-    # If bundle contains services (for example, EventListener or Twig Extension)
-    ConnectHolland\CookieConsentBundle\DependencyInjection\CHCookieConsentExtension:
-        autoconfigure: true # automātiski pieliks 'twig.extension' tagu
+            #$cookieCategories: '%ch_cookie_consent.cookie_categories%'
+            #$formAction: '%ch_cookie_consent.form_action%'
+            #$csrfProtection: '%ch_cookie_consent.csrf_protection%'
 
     ConnectHolland\CookieConsentBundle\:
         resource: '../../'
-        exclude: '../../{vendor}'
+        exclude:
+            - '../../Controller/'
+            - '../../DependencyInjection/'
+            - '../../Entity/'
+            - '../../Tests/'
+            - '../../Resources/'
+            - '../../CHCookieConsentBundle.php'
 
-    ConnectHolland\CookieConsentBundle\Controller\:
-        resource: '../../Controller/*'
+    # Controller registration
+    # Controller obligatory need to be public
+    ConnectHolland\CookieConsentBundle\Controller\CookieConsentController:
         public: true
-
-    ConnectHolland\CookieConsentBundle\Cookie\CookieChecker:
         arguments:
-            $requestStack: '@request_stack'
+            $formAction: '%ch_cookie_consent.form_action%'
+        tags:
+            - { name: 'controller.service_arguments' }
 
-    ConnectHolland\CookieConsentBundle\Cookie\CookieLogger:
+    ConnectHolland\CookieConsentBundle\Form\CookieConsentType:
         arguments:
-            $requestStack: "@request_stack"
+            $cookieCategories: '%ch_cookie_consent.cookie_categories%'
+            $csrfProtection: '%ch_cookie_consent.csrf_protection%'
+        tags:
+            - { name: form.type }
 
-    ConnectHolland\CookieConsentBundle\Twig\CHCookieConsentTwigExtension:
-        arguments:
-            $cookieChecker: '@ConnectHolland\CookieConsentBundle\Cookie\CookieChecker'
+#    ConnectHolland\CookieConsentBundle\Cookie\CookieChecker:
+#        arguments:
+#            $requestStack: '@request_stack'
+
+#    ConnectHolland\CookieConsentBundle\Cookie\CookieLogger:
+#        arguments:
+#            $requestStack: "@request_stack"
+
+#    ConnectHolland\CookieConsentBundle\Twig\CHCookieConsentTwigExtension:
+#        arguments:
+#            $cookieChecker: '@ConnectHolland\CookieConsentBundle\Cookie\CookieChecker'
