@@ -11,24 +11,28 @@ namespace ConnectHolland\CookieConsentBundle\Controller;
 
 use ConnectHolland\CookieConsentBundle\Cookie\CookieChecker;
 use ConnectHolland\CookieConsentBundle\Form\CookieConsentType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-class CookieConsentController extends AbstractController
+abstract class CookieConsentController implements ServiceSubscriberInterface
 {
+    use ServiceMethodsSubscriberTrait;
+
     public function __construct(
+        protected CookieChecker $cookieChecker,
         protected Environment $twigEnvironment,
         protected FormFactoryInterface $formFactory,
-        protected CookieChecker $cookieChecker,
         protected RouterInterface $router,
-        protected TranslatorInterface  $translator,
+        protected TranslatorInterface $translator,
         protected ?string $formAction = null
     ) {}
 
@@ -114,5 +118,15 @@ class CookieConsentController extends AbstractController
             $this->translator->setLocale($locale);
             $request->setLocale($locale);
         }
+    }
+
+    /**
+     * Manually made Helper method as original is not available in the bundle
+     */
+    private function redirectToRoute(string $route, array $parameters = [], int $status = 302): RedirectResponse
+    {
+        $url = $this->router->generate($route, $parameters);
+
+        return new RedirectResponse($url, $status);
     }
 }
