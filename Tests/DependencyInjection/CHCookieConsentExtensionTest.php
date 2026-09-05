@@ -31,7 +31,7 @@ class CHCookieConsentExtensionTest extends TestCase
     {
         $this->createConfiguration($this->getFullConfig());
 
-        $this->assertParameter(['necessary', 'functional', 'analytics', 'marketing'], 'ch_cookie_consent.categories');
+        $this->assertParameter(['necessary', 'functional', 'analytics', 'marketing'], 'ch_cookie_consent.cookie_categories');
     }
 
     public function testInvalidConfiguration(): void
