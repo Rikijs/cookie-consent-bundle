@@ -53,6 +53,15 @@ readonly class CookieConsentController
     }
 
     /**
+     * Reject all cookies.
+     */
+    /*#[Route(path: '/cookie_reject', name: 'ch_cookie_consent.reject')]
+    public function reject(Request $request): void
+    {
+        $test = 'test-123';
+    }*/
+
+    /**
      * Show cookie consent if cookie consent is not set.
      */
     #[Route('/cookie_consent_alt', name: 'ch_cookie_consent.show_if_cookie_consent_not_set')]
