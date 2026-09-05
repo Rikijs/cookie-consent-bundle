@@ -53,13 +53,22 @@ readonly class CookieConsentController
     }
 
     /**
-     * Reject all cookies.
+     * Reject all previously set cookies.
      */
-    /*#[Route(path: '/cookie_reject', name: 'ch_cookie_consent.reject')]
-    public function reject(Request $request): void
+    #[Route('/cookie_reject', name: 'ch_cookie_consent.reject')]
+    public function reject(): Response
     {
-        $test = 'test-123';
-    }*/
+        $response = new Response('Cookies where rejected.');
+
+        $response->headers->clearCookie('Cookie_Consent');
+        $response->headers->clearCookie('Cookie_Consent_Key');
+        $response->headers->clearCookie('Cookie_Category_necessary');
+        $response->headers->clearCookie('Cookie_Category_functional');
+        $response->headers->clearCookie('Cookie_Category_statistics');
+        $response->headers->clearCookie('Cookie_Category_marketing');
+
+        return $response;
+    }
 
     /**
      * Show cookie consent if cookie consent is not set.
@@ -75,9 +84,12 @@ readonly class CookieConsentController
      */
     protected function createCookieConsentForm(): FormInterface
     {
-        if ($this->formAction === null) {
+        if ($this->formAction === null)
+        {
             $form = $this->formFactory->create(CookieConsentType::class);
-        } else {
+        }
+        else
+        {
             $form = $this->formFactory->create(
                 CookieConsentType::class,
                 null,
@@ -96,7 +108,8 @@ readonly class CookieConsentController
     protected function setLocale(Request $request): void
     {
         $locale = $request->attributes->get('locale');
-        if (empty($locale) === false) {
+        if (empty($locale) === false)
+        {
             $this->translator->setLocale($locale);
             $request->setLocale($locale);
         }
