@@ -12,6 +12,17 @@ services:
             $formAction: '%ch_cookie_consent.form_action%'
             $csrfProtection: '%ch_cookie_consent.csrf_protection%'
 
+    # Controller registration
+    ConnectHolland\CookieConsentBundle\Controller\CookieConsentController:
+        public: true # Controller obligatory need to be public
+        tags:
+            - { name: 'controller.service_arguments' }
+            - { name: 'container.service_subscriber' }
+
+    # If bundle contains services (for example, EventListener or Twig Extension)
+    ConnectHolland\CookieConsentBundle\DependencyInjection\CHCookieConsentExtension:
+        autoconfigure: true # automātiski pieliks 'twig.extension' tagu
+
     ConnectHolland\CookieConsentBundle\:
         resource: '../../'
         exclude: '../../{vendor}'
