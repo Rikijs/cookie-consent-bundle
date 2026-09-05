@@ -23,12 +23,12 @@ use Twig\Environment;
 readonly class CookieConsentController
 {
     public function __construct(
-        protected Environment          $twigEnvironment,
+        protected Environment $twigEnvironment,
         protected FormFactoryInterface $formFactory,
-        protected CookieChecker        $cookieChecker,
-        protected RouterInterface      $router,
+        protected CookieChecker $cookieChecker,
+        protected RouterInterface $router,
         protected TranslatorInterface  $translator,
-        protected ?string              $formAction = null
+        protected ?string $formAction = null
     ) {}
 
     /**
