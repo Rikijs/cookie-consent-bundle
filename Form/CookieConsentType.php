@@ -41,7 +41,7 @@ class CookieConsentType extends AbstractType
                 'required' => false,
                 'data' => $category === 'necessary' || ($this->cookieChecker->isCookieConsentSavedByUser() && $this->cookieChecker->isCategoryAllowedByUser($category)),
                 'label_attr' => ['class' => 'checkbox-switch ms-3'],
-                'attr'=> $category === 'necessary' ? ['class' => 'form-check-input switch-success', 'disabled' => 'disabled'] : ['class' => 'form-check-input'],
+                'attr' => $category === 'necessary' ? ['class' => 'form-check-input switch-success', 'disabled' => 'disabled'] : ['class' => 'form-check-input'],
             ]);
         }
 

@@ -63,7 +63,7 @@ class CookieConsentController
         $response->headers->clearCookie('Cookie_Consent_Key');
         $response->headers->clearCookie('Cookie_Category_necessary');
         $response->headers->clearCookie('Cookie_Category_functional');
-        $response->headers->clearCookie('Cookie_Category_statistics');
+        $response->headers->clearCookie('Cookie_Category_analytics');
         $response->headers->clearCookie('Cookie_Category_marketing');
 
         return $response;
