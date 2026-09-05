@@ -18,21 +18,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
-use Symfony\Contracts\Service\ServiceSubscriberInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-abstract class CookieConsentController implements ServiceSubscriberInterface
+class CookieConsentController
 {
-    use ServiceMethodsSubscriberTrait;
-
     public function __construct(
         protected CookieChecker $cookieChecker,
         protected Environment $twigEnvironment,
         protected FormFactoryInterface $formFactory,
         protected RouterInterface $router,
-        protected TranslatorInterface $translator,
         protected ?string $formAction = null
     ) {}
 
@@ -108,14 +102,14 @@ abstract class CookieConsentController implements ServiceSubscriberInterface
     }
 
     /**
-     * Set locale if available as a GET parameter.
+     * Set locale if available as a request attribute.
      */
     protected function setLocale(Request $request): void
     {
-        $locale = $request->attributes->get('locale');
-        if (empty($locale) === false)
+        $locale = $request->attributes->get('_locale');
+
+        if (is_string($locale) && $locale !== '')
         {
-            $this->translator->setLocale($locale);
             $request->setLocale($locale);
         }
     }
