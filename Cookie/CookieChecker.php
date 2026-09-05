@@ -12,10 +12,9 @@ namespace ConnectHolland\CookieConsentBundle\Cookie;
 use ConnectHolland\CookieConsentBundle\Enum\CookieNameEnum;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class CookieChecker
+readonly class CookieChecker
 {
-
-    public function __construct(private readonly RequestStack $requestStack) {}
+    public function __construct(private RequestStack $requestStack) {}
 
     /**
      * Check if cookie consent has already been saved.
@@ -26,7 +25,7 @@ class CookieChecker
     }
 
     /**
-     * Check if given cookie category is permitted by user.
+     * Check if the user permits a given cookie category.
      */
     public function isCategoryAllowedByUser(string $category): bool
     {
