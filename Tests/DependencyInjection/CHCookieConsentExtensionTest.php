@@ -18,14 +18,7 @@ use Symfony\Component\Yaml\Parser;
 
 class CHCookieConsentExtensionTest extends TestCase
 {
-    /**
-     * @var CHCookieConsentExtension
-     */
     private CHCookieConsentExtension $chCookieConsentExtension;
-
-    /**
-     * @var ContainerBuilder
-     */
     private ContainerBuilder $configuration;
 
     protected function setUp(): void

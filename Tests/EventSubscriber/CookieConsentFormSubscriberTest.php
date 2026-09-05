@@ -184,11 +184,6 @@ class CookieConsentFormSubscriberTest extends TestCase
         $this->assertSame($existingKey, $key);
     }
 
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @return ResponseEvent
-     */
     private function getResponseEvent(Request $request, Response $response): ResponseEvent
     {
         $kernel = $this->createMock(HttpKernelInterface::class);

@@ -10,16 +10,16 @@ declare(strict_types=1);
 namespace ConnectHolland\CookieConsentBundle\Cookie;
 
 use ConnectHolland\CookieConsentBundle\Entity\CookieConsentLog;
-use Doctrine\ORM\EntityManagerInterface;
+use DateTime;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ManagerRegistry;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class CookieLogger
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private ObjectManager $entityManager;
 
     public function __construct(
         ManagerRegistry $registry,
@@ -29,12 +29,13 @@ class CookieLogger
     }
 
     /**
-     * Logs users preferences in database.
+     * Logs users' preferences in a database.
      */
     public function log(array $categories, string $key): void
     {
-        if ($this->requestStack->getCurrentRequest() === null) {
-            throw new \RuntimeException('No request found');
+        if (!$this->requestStack->getCurrentRequest() instanceof Request)
+        {
+            throw new RuntimeException('No request found');
         }
 
         $ip = $this->anonymizeIp($this->requestStack->getCurrentRequest()->getClientIp());
@@ -48,12 +49,12 @@ class CookieLogger
 
     protected function persistCookieConsentLog(string $category, string $value, string $ip, string $key): void
     {
-        $cookieConsentLog = (new CookieConsentLog())
+        $cookieConsentLog = new CookieConsentLog()
             ->setIpAddress($ip)
             ->setCookieConsentKey($key)
             ->setCookieName($category)
             ->setCookieValue($value)
-            ->setTimestamp(new \DateTime());
+            ->setTimestamp(new DateTime());
 
         $this->entityManager->persist($cookieConsentLog);
     }

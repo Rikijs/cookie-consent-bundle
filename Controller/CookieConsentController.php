@@ -85,20 +85,16 @@ class CookieConsentController
     {
         if ($this->formAction === null)
         {
-            $form = $this->formFactory->create(CookieConsentType::class);
-        }
-        else
-        {
-            $form = $this->formFactory->create(
-                CookieConsentType::class,
-                null,
-                [
-                    'action' => $this->router->generate($this->formAction),
-                ]
-            );
+            return $this->formFactory->create(CookieConsentType::class);
         }
 
-        return $form;
+        return $this->formFactory->create(
+            CookieConsentType::class,
+            null,
+            [
+                'action' => $this->router->generate($this->formAction),
+            ]
+        );
     }
 
     /**

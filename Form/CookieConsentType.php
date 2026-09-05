@@ -21,9 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 class CookieConsentType extends AbstractType
 {
     /**
-     * @param CookieChecker $cookieChecker
      * @param array<string> $cookieCategories
-     * @param bool $csrfProtection
      */
     public function __construct(
         protected CookieChecker $cookieChecker,
