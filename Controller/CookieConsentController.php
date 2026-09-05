@@ -68,7 +68,8 @@ class CookieConsentController extends AbstractController
         $response->headers->clearCookie('Cookie_Category_statistics');
         $response->headers->clearCookie('Cookie_Category_marketing');
 
-        return $response;
+        //return $response;
+        return $this->redirectToRoute('ch_cookie_consent.show_if_cookie_consent_not_set');
     }
 
     /**
