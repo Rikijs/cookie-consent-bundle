@@ -59,7 +59,7 @@ class CookieConsentController extends AbstractController
     #[Route('/cookie_reject', name: 'ch_cookie_consent.reject')]
     public function reject(): Response
     {
-        $response = new Response('Cookies where rejected.');
+        $response = $this->redirectToRoute('ch_cookie_consent.show_if_cookie_consent_not_set');
 
         $response->headers->clearCookie('Cookie_Consent');
         $response->headers->clearCookie('Cookie_Consent_Key');
@@ -68,8 +68,7 @@ class CookieConsentController extends AbstractController
         $response->headers->clearCookie('Cookie_Category_statistics');
         $response->headers->clearCookie('Cookie_Category_marketing');
 
-        //return $response;
-        return $this->redirectToRoute('ch_cookie_consent.show_if_cookie_consent_not_set');
+        return $response;
     }
 
     /**
