@@ -17,15 +17,19 @@
 Configure your Cookie Consent with the following possible settings
 ```yaml
 ch_cookie_consent:
-    categories: # Below are the default supported categories
+    cookie_categories: # Below are the default supported categories
         - 'necessary'
         - 'functional'
         - 'analytics'
         - 'marketing'
     use_logger: true # Logs user actions to database
     http_only: true # Sets HttpOnly on cookies
-    form_action: $routeName # When set, xhr-Requests will only be sent to this route. Take care of having the route available.
+    form_action: ~ # $routeName # When set, xhr-Requests will only be sent to this route. Take care of having the route available.
     csrf_protection: true # The cookie consent form is csrf protected or not
+    
+    # When set, the user will be redirected to this route when rejecting all cookies
+    # landing page for reject: 'privacy_cookies' or 'privacy_reject'
+    reject_route_name: 'privacy_reject'
 ```
 
 # Simon Chabrier - Forked Version: 1.0.0 compatible with Symfony 7.* and PHP 8.*
