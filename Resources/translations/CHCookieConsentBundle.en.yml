@@ -24,7 +24,7 @@ ch_cookie_consent:
         name: 'Marketing/tracking cookies'
         title: 'Marketing/tracking cookies. Would you like to enable them to personalize ads?'
         descriptionShort: 'Marketing cookies, also known as advertising or tracking cookies, are mainly used to track online activities of users and show them personalized ads based on their interests.'
-        description: 'Marketing cookies, also known as advertising or tracking cookies, collect information about your habits, create a visitor profile, and show you offers that match your interests. These cookies are used to help provide you with customized information and analyze data flow, and they also contain social media cookies that allow you to share content on social networks. Information collected by third parties may include data such as geographic location (determined by IP address).'
+        description: 'Marketing cookies, also known as advertising or tracking cookies, collect information about your habits, create a visitor profile, and show you offers that match your interests. These cookies are used to help provide you with customized information and analyze data flow, and they also contain social media cookies that allow you to share content on social networks. Information collected by third parties may include data such as geographic location (that is determined by IP address).'
     no: 'No'
     yes: 'Yes'
     save: 'Save my selection'
