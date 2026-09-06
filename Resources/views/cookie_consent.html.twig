@@ -30,7 +30,7 @@
                 {% endfor %}
             {% endif %}
 
-            <a class="btn btn-danger" href="{{ path('ConnectHolland\\CookieConsentBundle\\Controller\\CookieConsentController::reject') }}">
+            <a class="btn btn-primary" href="{{ path('ConnectHolland\\CookieConsentBundle\\Controller\\CookieConsentController::reject') }}">
                 {{- 'ch_cookie_consent.reject_all_cookies'|trans({}, 'CHCookieConsentBundle') -}}
             </a>
         </div>
