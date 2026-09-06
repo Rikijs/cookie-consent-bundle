@@ -77,8 +77,4 @@ export default class extends Controller {
         }
         return new URLSearchParams(formData).toString();
     }
-
-    rejectAllCookies() {
-        window.location.href('/cookie_reject');
-    }
 }
