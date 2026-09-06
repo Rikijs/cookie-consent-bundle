@@ -81,16 +81,4 @@ export default class extends Controller {
     rejectAllCookies() {
         window.location.href('/cookie_reject');
     }
-
-    /*rejectAllCookiesORIG() {
-        document.cookie.split(';').forEach(cookie => {
-            const eqPos = cookie.indexOf('=');
-            const name = eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim();
-
-            if (name === 'Cookie_Consent' || name === 'Cookie_Consent_Key' || name.startsWith('Cookie_Category_')) {
-                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
-            }
-        });
-        window.location.reload();
-    }*/
 }
