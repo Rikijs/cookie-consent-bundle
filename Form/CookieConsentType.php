@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace ConnectHolland\CookieConsentBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
@@ -58,7 +59,7 @@ class CookieConsentType extends AbstractType
         });
 
         $builder->add('save', SubmitType::class, ['label' => 'ch_cookie_consent.save', 'attr' => ['class' => 'btn btn-primary mt-3 ch-cookie-consent__btn']]);
-        $builder->add('reject', SubmitType::class, ['label' => 'ch_cookie_consent.reject_all_cookies', 'attr' => ['class' => 'btn btn-primary mt-3 ch-cookie-consent__btn']]);
+        $builder->add('reject', ButtonType::class, ['label' => 'ch_cookie_consent.reject_all_cookies', 'attr' => ['class' => 'btn btn-warning mt-3 ch-cookie-consent__btn']]);
     }
 
     /**
