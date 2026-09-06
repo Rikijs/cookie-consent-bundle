@@ -79,10 +79,10 @@ export default class extends Controller {
     }
 
     rejectAllCookies() {
-        window.location.replace('/cookie_reject');
+        window.location.href('/cookie_reject');
     }
 
-    rejectAllCookiesORIG() {
+    /*rejectAllCookiesORIG() {
         document.cookie.split(';').forEach(cookie => {
             const eqPos = cookie.indexOf('=');
             const name = eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim();
@@ -92,5 +92,5 @@ export default class extends Controller {
             }
         });
         window.location.reload();
-    }
+    }*/
 }
