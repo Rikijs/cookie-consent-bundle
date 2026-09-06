@@ -8,4 +8,7 @@ ch_cookie_consent:
     http_only: true # Sets HttpOnly on cookies
     form_action: ~ # $routeName # When set, xhr-Requests will only be sent to this route. Take care of having the route available.
     csrf_protection: true # The cookie consent form is csrf protected or not
-    reject_route_name: 'privacy_cookies' # When set, the user will be redirected to this route when rejecting all cookies
+
+    # When set, the user will be redirected to this route when rejecting all cookies
+    # reject landing page: 'privacy_cookies' or 'privacy_reject'
+    reject_route_name: 'privacy_reject'
