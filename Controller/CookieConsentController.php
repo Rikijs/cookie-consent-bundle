@@ -57,7 +57,8 @@ class CookieConsentController
     #[Route('/cookie_reject', name: 'ch_cookie_consent.reject')]
     public function reject(): Response
     {
-        $response = $this->redirectToRoute('ch_cookie_consent.show_if_cookie_consent_not_set');
+        //$response = $this->redirectToRoute('ch_cookie_consent.show_if_cookie_consent_not_set');
+        $response = $this->redirectToRoute('ch_cookie_consent.reject_route_name');
 
         $response->headers->clearCookie('Cookie_Consent');
         $response->headers->clearCookie('Cookie_Consent_Key');

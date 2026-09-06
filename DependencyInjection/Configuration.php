@@ -44,6 +44,9 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('csrf_protection')
                     ->defaultTrue()
                 ->end()
+                ->stringNode('reject_route_name')
+                    ->defaultValue('privacy_cookies')
+                ->end()
             ->end()
         ;
 
