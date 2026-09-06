@@ -12,6 +12,7 @@
 - Added `necessary` cookies (always active type)
 - Using following cookies: `functional`, `analytics`, `marketing`
 - Removed following cookies: `social_media`, `tracking`
+- added a link that looks like a button for _rejecting all cookies_
 
 ### override Step 4: Configure to your needs
 Configure your Cookie Consent with the following possible settings
