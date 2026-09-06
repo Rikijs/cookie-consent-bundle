@@ -11,20 +11,36 @@
             'data-cookie-consent-target': 'cookieForm'
         }
     }) }}
+    {# separete buttons form fields  #}
+    {% set myButtons = [] %}
+    {% set myFields = [] %}
+    {% for child in form %}
+        {% if child.vars.block_prefixes[0] !== 'button' %}
+            {% set myFields = myFields|merge(child) %}
+        {% elseif child.vars.block_prefixes[0] === 'button' %}
+            {% set myFields = myButtons|merge(child) %}
+        {% endif %}
+    {% endfor %}
+
         <div class="ch-cookie-consent__category-group" data-cookie-consent-target="cookieCategoryDetails">
-            {% for child in form %}
-                {% if child.vars.block_prefixes[0] !== 'button' %}
-                    {{ form_row(child) }}
-                {% endif %}
+            {% for child in myFields %}
+                {{ form_row(child) }}
             {% endfor %}
         </div>
         <div class="ch-cookie-consent__btn-group mt-3">
-            {% for child in form %}
-                {% if child.vars.block_prefixes[0] === 'button' %}
+            {% for child in myButtons %}
+                {% if (loop.index === 1) %}
                     {{ form_widget(child, {
                         'attr': {
                             'class': 'btn btn-primary me-2 ch-cookie-consent__btn',
                             'data-action': 'click->cookie-consent#submitForm'
+                        }
+                    }) }}
+                {% elseif (loop.index === 2) %}
+                    {{ form_widget(child, {
+                        'attr': {
+                            'class': 'btn btn-primary me-2 ch-cookie-consent__btn',
+                            'data-action': 'click->cookie-consent#rejectAllCookies'
                         }
                     }) }}
                 {% endif %}
@@ -34,18 +50,11 @@
 </div>
 
 {#
-{% if (loop.index === 1) %}
+{% if child.vars.block_prefixes[0] === 'button' %}
     {{ form_widget(child, {
         'attr': {
             'class': 'btn btn-primary me-2 ch-cookie-consent__btn',
             'data-action': 'click->cookie-consent#submitForm'
-        }
-    }) }}
-{% elseif (loop.index === 2) %}
-    {{ form_widget(child, {
-        'attr': {
-            'class': 'btn btn-primary me-2 ch-cookie-consent__btn',
-            'data-action': 'click->cookie-consent#rejectAllCookies'
         }
     }) }}
 {% endif %}
