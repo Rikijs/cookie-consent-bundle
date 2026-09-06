@@ -29,35 +29,10 @@
                     }) }}
                 {% endfor %}
             {% endif %}
+
+            <a class="btn btn-danger" href="{{ path('ConnectHolland\\CookieConsentBundle\\Controller\\CookieConsentController::reject') }}">
+                {{- 'ch_cookie_consent.reject_all_cookies'|trans({}, 'CHCookieConsentBundle') -}}
+            </a>
         </div>
     {{ form_end(form) }}
 </div>
-
-{#
-{% if child.vars.block_prefixes[0] === 'button' %}
-    {{ form_widget(child, {
-        'attr': {
-            'class': 'btn btn-primary me-2 ch-cookie-consent__btn',
-            'data-action': 'click->cookie-consent#submitForm'
-        }
-    }) }}
-{% endif %}
-#}
-
-{#
-<div class="ch-cookie-consent__category-group" data-cookie-consent-target="cookieCategoryDetails">
-    {% for child in myFields %}
-        {{ form_row(child) }}
-    {% endfor %}
-</div>
-<div class="ch-cookie-consent__btn-group mt-3">
-    {% for child in myButtons %}
-        {{ form_widget(child, {
-            'attr': {
-                'class': 'btn btn-primary me-2 ch-cookie-consent__btn',
-                'data-action': 'click->cookie-consent#submitForm'
-            }
-        }) }}
-    {% endfor %}
-</div>
-#}

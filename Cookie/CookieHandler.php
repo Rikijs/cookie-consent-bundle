@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CookieHandler
 {
-
     public function __construct(private readonly bool $httpOnly) {}
 
     /**
@@ -28,7 +27,8 @@ class CookieHandler
         $this->saveCookie(CookieNameEnum::COOKIE_CONSENT_NAME, date('r'), $response);
         $this->saveCookie(CookieNameEnum::COOKIE_CONSENT_KEY_NAME, $key, $response);
 
-        foreach ($categories as $category => $permitted) {
+        foreach ($categories as $category => $permitted)
+        {
             $this->saveCookie(CookieNameEnum::getCookieCategoryName($category), $permitted, $response);
         }
     }

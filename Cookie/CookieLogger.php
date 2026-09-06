@@ -24,7 +24,8 @@ class CookieLogger
     public function __construct(
         ManagerRegistry $registry,
         private readonly RequestStack $requestStack
-    ) {
+    )
+    {
         $this->entityManager = $registry->getManagerForClass(CookieConsentLog::class);
     }
 
@@ -40,7 +41,8 @@ class CookieLogger
 
         $ip = $this->anonymizeIp($this->requestStack->getCurrentRequest()->getClientIp());
 
-        foreach ($categories as $category => $value) {
+        foreach ($categories as $category => $value)
+        {
             $this->persistCookieConsentLog($category, $value, $ip, $key);
         }
 
@@ -64,7 +66,8 @@ class CookieLogger
      */
     protected function anonymizeIp(?string $ip): string
     {
-        if ($ip === null) {
+        if ($ip === null)
+        {
             return 'unknown';
         }
 

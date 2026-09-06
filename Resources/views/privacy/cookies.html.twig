@@ -39,6 +39,7 @@
                         {{- 'ch_cookie_consent.adjust_consent'|trans({}, 'CHCookieConsentBundle') -}}
                     </button>
 
+                    {# cookie consent choice form, initially hidden #}
                     <div class="mt-3" data-cookie-consent-toggle-target="consentToggle" style="display: none;">
                         {{ render_esi(path('ch_cookie_consent.show', { '_locale': app.locale })) }}
                     </div>

@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\RouterInterface;
@@ -27,6 +28,7 @@ class CookieConsentController
         protected Environment $twigEnvironment,
         protected FormFactoryInterface $formFactory,
         protected RouterInterface $router,
+        protected ParameterBagInterface $parameterBag,
         protected ?string $formAction = null
     ) {}
 
@@ -57,8 +59,8 @@ class CookieConsentController
     #[Route('/cookie_reject', name: 'ch_cookie_consent.reject')]
     public function reject(): Response
     {
-        //$response = $this->redirectToRoute('ch_cookie_consent.show_if_cookie_consent_not_set');
-        $response = $this->redirectToRoute('ch_cookie_consent.reject_route_name');
+        $rejectRouteName = $this->parameterBag->get('ch_cookie_consent.reject_route_name');
+        $response = $this->redirectToRoute($rejectRouteName);
 
         $response->headers->clearCookie('Cookie_Consent');
         $response->headers->clearCookie('Cookie_Consent_Key');
