@@ -1,0 +1,60 @@
+name: Tests
+
+on:
+    push:
+        branches:
+            - main
+            - master
+    pull_request:
+
+jobs:
+    phpunit:
+        name: PHP ${{ matrix.php }} / Symfony ${{ matrix.symfony }}
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                php:
+                    - '8.4'
+                symfony:
+                    - '7.4.*'
+                    - '8.0.*'
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  coverage: none
+                  tools: composer:v2
+                  extensions: mbstring, intl
+
+            - name: Validate composer.json
+              run: composer validate --strict
+
+            - name: Configure Symfony version
+              run: |
+                  composer require \
+                      symfony/asset:${{ matrix.symfony }} \
+                      symfony/dependency-injection:${{ matrix.symfony }} \
+                      symfony/doctrine-bridge:${{ matrix.symfony }} \
+                      symfony/expression-language:${{ matrix.symfony }} \
+                      symfony/form:${{ matrix.symfony }} \
+                      symfony/framework-bundle:${{ matrix.symfony }} \
+                      symfony/http-foundation:${{ matrix.symfony }} \
+                      symfony/routing:${{ matrix.symfony }} \
+                      symfony/translation:${{ matrix.symfony }} \
+                      symfony/twig-bridge:${{ matrix.symfony }} \
+                      symfony/twig-bundle:${{ matrix.symfony }} \
+                      symfony/yaml:${{ matrix.symfony }} \
+                      --no-update
+
+            - name: Install dependencies
+              run: composer update --prefer-dist --no-interaction --no-progress
+
+            - name: Run PHPUnit
+              run: vendor/bin/phpunit -c phpunit.xml.dist
