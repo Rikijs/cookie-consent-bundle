@@ -79,6 +79,10 @@ export default class extends Controller {
     }
 
     rejectAllCookies() {
+        window.location.replace('/cookie_reject');
+    }
+
+    rejectAllCookiesORIG() {
         document.cookie.split(';').forEach(cookie => {
             const eqPos = cookie.indexOf('=');
             const name = eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim();
