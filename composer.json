@@ -19,7 +19,7 @@
         "symfony/translation": "^7.4 || ^8.1",
         "symfony/twig-bridge": "^7.4 || ^8.1",
         "symfony/twig-bundle": "^7.4 || ^8.1",
-        "twig/twig": "^3.23"
+        "twig/twig": "^3.28"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
