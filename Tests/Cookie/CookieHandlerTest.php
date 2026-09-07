@@ -18,7 +18,7 @@ class CookieHandlerTest extends TestCase
     /**
      * @var Response
      */
-    private $response;
+    protected $response;
 
     protected function setUp(): void
     {

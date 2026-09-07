@@ -16,8 +16,8 @@ use PHPUnit\Framework\TestCase;
 
 class CHCookieConsentTwigExtensionTest extends TestCase
 {
-    private CHCookieConsentTwigExtension $chCookieConsentTwigExtension;
-    private CookieChecker $cookieChecker;
+    protected CHCookieConsentTwigExtension $chCookieConsentTwigExtension;
+    protected CookieChecker $cookieChecker;
 
     protected function setUp(): void
     {

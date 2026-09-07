@@ -19,9 +19,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CookieCheckerTest extends TestCase
 {
-    private Request $request;
-    private RequestStack $requestStack;
-    private CookieChecker $cookieChecker;
+    protected Request $request;
+    protected RequestStack $requestStack;
+    protected CookieChecker $cookieChecker;
 
     protected function setUp(): void
     {

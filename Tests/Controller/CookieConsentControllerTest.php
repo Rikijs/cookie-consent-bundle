@@ -23,7 +23,7 @@ use Twig\Environment;
 
 class CookieConsentControllerTest extends TestCase
 {
-    private function createController(
+    protected function createController(
         ?CookieChecker $cookieChecker = null,
         ?Environment $templating = null,
         ?FormFactoryInterface $formFactory = null,

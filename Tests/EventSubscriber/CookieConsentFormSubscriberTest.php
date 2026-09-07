@@ -29,7 +29,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class CookieConsentFormSubscriberTest extends TestCase
 {
-    private function createSubscriber(
+    protected function createSubscriber(
         ?FormFactoryInterface $formFactory = null,
         ?CookieLogger $cookieLogger = null,
         ?CookieHandler $cookieHandler = null,
@@ -176,7 +176,7 @@ class CookieConsentFormSubscriberTest extends TestCase
         $this->assertSame($existingKey, $key);
     }
 
-    private function getResponseEvent(Request $request, Response $response): ResponseEvent
+    protected function getResponseEvent(Request $request, Response $response): ResponseEvent
     {
         $kernel = $this->createStub(HttpKernelInterface::class);
 

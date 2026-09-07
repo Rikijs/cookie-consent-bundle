@@ -18,8 +18,8 @@ use Symfony\Component\Yaml\Parser;
 
 class CHCookieConsentExtensionTest extends TestCase
 {
-    private CHCookieConsentExtension $chCookieConsentExtension;
-    private ContainerBuilder $configuration;
+    protected CHCookieConsentExtension $chCookieConsentExtension;
+    protected ContainerBuilder $configuration;
 
     protected function setUp(): void
     {
@@ -76,7 +76,7 @@ EOF;
     /**
      * Test if parameter is set.
      */
-    private function assertParameter($value, $key): void
+    protected function assertParameter($value, $key): void
     {
         $this->assertSame($value, $this->configuration->getParameter($key), sprintf('%s parameter is correct', $key));
     }

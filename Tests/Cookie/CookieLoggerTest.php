@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CookieLoggerTest extends TestCase
 {
-    private function createCookieLogger(
+    protected function createCookieLogger(
         ?ManagerRegistry $registry = null,
         ?RequestStack $requestStack = null
     ): CookieLogger {

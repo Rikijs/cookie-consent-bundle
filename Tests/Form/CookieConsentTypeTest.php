@@ -18,7 +18,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 #[AllowMockObjectsWithoutExpectations]
 class CookieConsentTypeTest extends TypeTestCase
 {
-    private CookieChecker $cookieChecker;
+    protected CookieChecker $cookieChecker;
 
     protected function setUp(): void
     {
