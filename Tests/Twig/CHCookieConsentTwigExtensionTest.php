@@ -16,19 +16,12 @@ use PHPUnit\Framework\TestCase;
 
 class CHCookieConsentTwigExtensionTest extends TestCase
 {
-    /**
-     * @var CHCookieConsentTwigExtension
-     */
-    private $chCookieConsentTwigExtension;
-
-    /**
-     * @var MockObject
-     */
-    private $cookieChecker;
+    private CHCookieConsentTwigExtension $chCookieConsentTwigExtension;
+    private CookieChecker $cookieChecker;
 
     protected function setUp(): void
     {
-        $this->cookieChecker = $this->createMock(CookieChecker::class);
+        $this->cookieChecker = $this->createStub(CookieChecker::class);
         $this->chCookieConsentTwigExtension = new CHCookieConsentTwigExtension($this->cookieChecker);
     }
 

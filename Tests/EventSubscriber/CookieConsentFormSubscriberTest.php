@@ -14,8 +14,6 @@ use ConnectHolland\CookieConsentBundle\Cookie\CookieLogger;
 use ConnectHolland\CookieConsentBundle\EventSubscriber\CookieConsentFormSubscriber;
 use ConnectHolland\CookieConsentBundle\Form\CookieConsentType;
 use ConnectHolland\CookieConsentBundle\Enum\CookieNameEnum;
-use PHPUnit\Framework\MockObject\Exception;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 use ReflectionMethod;
@@ -31,26 +29,18 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class CookieConsentFormSubscriberTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $formFactoryInterface;
-
-    /**
-     * @var MockObject
-     */
-    private $cookieLogger;
-
-    /**
-     * @var MockObject
-     */
-    private $cookieHandler;
-
-    protected function setUp(): void
-    {
-        $this->formFactoryInterface = $this->createMock(FormFactoryInterface::class);
-        $this->cookieLogger = $this->createMock(CookieLogger::class);
-        $this->cookieHandler = $this->createMock(CookieHandler::class);
+    private function createSubscriber(
+        ?FormFactoryInterface $formFactory = null,
+        ?CookieLogger $cookieLogger = null,
+        ?CookieHandler $cookieHandler = null,
+        bool $useLogger = true
+    ): CookieConsentFormSubscriber {
+        return new CookieConsentFormSubscriber(
+            $formFactory ?? $this->createStub(FormFactoryInterface::class),
+            $cookieLogger ?? $this->createStub(CookieLogger::class),
+            $cookieHandler ?? $this->createStub(CookieHandler::class),
+            $useLogger
+        );
     }
 
     public function testGetSubscribedEvents(): void
@@ -59,7 +49,7 @@ class CookieConsentFormSubscriberTest extends TestCase
            KernelEvents::RESPONSE => ['onResponse'],
         ];
 
-        $cookieConsentFormSubscriber = new CookieConsentFormSubscriber($this->formFactoryInterface, $this->cookieLogger, $this->cookieHandler, true);
+        $cookieConsentFormSubscriber = $this->createSubscriber();
         $this->assertSame($expectedEvents, $cookieConsentFormSubscriber::getSubscribedEvents());
     }
 
@@ -83,17 +73,23 @@ class CookieConsentFormSubscriberTest extends TestCase
             ->method('getData')
             ->willReturn([]);
 
-        $this->formFactoryInterface
+        $formFactory = $this->createMock(FormFactoryInterface::class);
+        $formFactory
             ->expects($this->once())
             ->method('create')
             ->with(CookieConsentType::class)
             ->willReturn($form);
 
-        $this->cookieLogger
+        $cookieLogger = $this->createMock(CookieLogger::class);
+        $cookieLogger
             ->expects($this->once())
             ->method('log');
 
-        $cookieConsentFormSubscriber = new CookieConsentFormSubscriber($this->formFactoryInterface, $this->cookieLogger, $this->cookieHandler, true);
+        $cookieConsentFormSubscriber = $this->createSubscriber(
+            formFactory: $formFactory,
+            cookieLogger: $cookieLogger,
+            useLogger: true
+        );
         $cookieConsentFormSubscriber->onResponse($event);
     }
 
@@ -117,17 +113,23 @@ class CookieConsentFormSubscriberTest extends TestCase
             ->method('getData')
             ->willReturn([]);
 
-        $this->formFactoryInterface
+        $formFactory = $this->createMock(FormFactoryInterface::class);
+        $formFactory
             ->expects($this->once())
             ->method('create')
             ->with(CookieConsentType::class)
             ->willReturn($form);
 
-        $this->cookieLogger
+        $cookieLogger = $this->createMock(CookieLogger::class);
+        $cookieLogger
             ->expects($this->never())
             ->method('log');
 
-        $cookieConsentFormSubscriber = new CookieConsentFormSubscriber($this->formFactoryInterface, $this->cookieLogger, $this->cookieHandler, false);
+        $cookieConsentFormSubscriber = $this->createSubscriber(
+            formFactory: $formFactory,
+            cookieLogger: $cookieLogger,
+            useLogger: false
+        );
         $cookieConsentFormSubscriber->onResponse($event);
     }
 
@@ -136,8 +138,8 @@ class CookieConsentFormSubscriberTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('No ResponseEvent class found');
 
-        $cookieConsentFormSubscriber = new CookieConsentFormSubscriber($this->formFactoryInterface, $this->cookieLogger, $this->cookieHandler, false);
-        $event = $this->createMock(KernelEvent::class);
+        $cookieConsentFormSubscriber = $this->createSubscriber(useLogger: false);
+        $event = $this->createStub(KernelEvent::class);
         $event->method('isMainRequest')->willReturn(true);
         $cookieConsentFormSubscriber->onResponse($event);
     }
@@ -149,12 +151,7 @@ class CookieConsentFormSubscriberTest extends TestCase
     {
         $request = new Request();
 
-        $cookieConsentFormSubscriber = new CookieConsentFormSubscriber(
-            $this->formFactoryInterface,
-            $this->cookieLogger,
-            $this->cookieHandler,
-            true
-        );
+        $cookieConsentFormSubscriber = $this->createSubscriber();
 
         $reflectionMethod = new ReflectionMethod($cookieConsentFormSubscriber, 'getCookieConsentKey');
         $key = $reflectionMethod->invoke($cookieConsentFormSubscriber, $request);
@@ -171,12 +168,7 @@ class CookieConsentFormSubscriberTest extends TestCase
         $request = new Request();
         $request->cookies->set(CookieNameEnum::COOKIE_CONSENT_KEY_NAME, $existingKey);
 
-        $cookieConsentFormSubscriber = new CookieConsentFormSubscriber(
-            $this->formFactoryInterface,
-            $this->cookieLogger,
-            $this->cookieHandler,
-            true
-        );
+        $cookieConsentFormSubscriber = $this->createSubscriber();
 
         $reflectionMethod = new ReflectionMethod($cookieConsentFormSubscriber, 'getCookieConsentKey');
         $key = $reflectionMethod->invoke($cookieConsentFormSubscriber, $request);
@@ -186,7 +178,7 @@ class CookieConsentFormSubscriberTest extends TestCase
 
     private function getResponseEvent(Request $request, Response $response): ResponseEvent
     {
-        $kernel = $this->createMock(HttpKernelInterface::class);
+        $kernel = $this->createStub(HttpKernelInterface::class);
 
         return new ResponseEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST, $response);
     }

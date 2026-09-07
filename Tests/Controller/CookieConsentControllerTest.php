@@ -12,145 +12,159 @@ namespace ConnectHolland\CookieConsentBundle\Tests\Controller;
 use ConnectHolland\CookieConsentBundle\Controller\CookieConsentController;
 use ConnectHolland\CookieConsentBundle\Cookie\CookieChecker;
 use ConnectHolland\CookieConsentBundle\Form\CookieConsentType;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class CookieConsentControllerTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $templating;
-
-    /**
-     * @var MockObject
-     */
-    private $formFactory;
-
-    /**
-     * @var MockObject
-     */
-    private $cookieChecker;
-
-    /**
-     * @var MockObject
-     */
-    private $translator;
-
-    /**
-     * @var MockObject
-     */
-    private $router;
-
-    /**
-     * @var CookieConsentController
-     */
-    private $cookieConsentController;
-
-    protected function setUp(): void
-    {
-        $this->templating = $this->createMock(Environment::class);
-        $this->formFactory = $this->createMock(FormFactoryInterface::class);
-        $this->cookieChecker = $this->createMock(CookieChecker::class);
-        $this->translator = $this->getMockBuilder(TranslatorInterface::class)->addMethods(['setLocale'])->getMockForAbstractClass();
-        $this->router = $this->createMock(RouterInterface::class);
-        $this->cookieConsentController = new CookieConsentController(
-            $this->templating,
-            $this->formFactory,
-            $this->cookieChecker,
-            $this->router,
-            $this->translator,
-            'false'
+    private function createController(
+        ?CookieChecker $cookieChecker = null,
+        ?Environment $templating = null,
+        ?FormFactoryInterface $formFactory = null,
+        ?RouterInterface $router = null,
+        ?ParameterBagInterface $parameterBag = null,
+        ?string $formAction = null
+    ): CookieConsentController {
+        return new CookieConsentController(
+            $cookieChecker ?? $this->createStub(CookieChecker::class),
+            $templating ?? $this->createStub(Environment::class),
+            $formFactory ?? $this->createStub(FormFactoryInterface::class),
+            $router ?? $this->createStub(RouterInterface::class),
+            $parameterBag ?? $this->createStub(ParameterBagInterface::class),
+            $formAction
         );
     }
 
     public function testShow(): void
     {
-        $this->formFactory
+        $formFactory = $this->createMock(FormFactoryInterface::class);
+        $formFactory
             ->expects($this->once())
             ->method('create')
             ->with(CookieConsentType::class)
-            ->willReturn($this->createMock(FormInterface::class));
+            ->willReturn($this->createStub(FormInterface::class));
 
-        $this->templating
+        $templating = $this->createMock(Environment::class);
+        $templating
             ->expects($this->once())
             ->method('render')
             ->willReturn('test');
 
-        $response = $this->cookieConsentController->show(new Request());
+        $controller = $this->createController(templating: $templating, formFactory: $formFactory);
+        $response = $controller->show(new Request());
 
         $this->assertInstanceOf(Response::class, $response);
     }
 
     public function testShowIfCookieConsentNotSet(): void
     {
-        $this->formFactory
+        $formFactory = $this->createMock(FormFactoryInterface::class);
+        $formFactory
             ->expects($this->once())
             ->method('create')
             ->with(CookieConsentType::class)
-            ->willReturn($this->createMock(FormInterface::class));
+            ->willReturn($this->createStub(FormInterface::class));
 
-        $this->templating
+        $templating = $this->createMock(Environment::class);
+        $templating
             ->expects($this->once())
             ->method('render')
             ->willReturn('test');
 
-        $response = $this->cookieConsentController->showIfCookieConsentNotSet(new Request());
+        $controller = $this->createController(templating: $templating, formFactory: $formFactory);
+        $response = $controller->showIfCookieConsentNotSet(new Request());
 
         $this->assertInstanceOf(Response::class, $response);
     }
 
     public function testShowIfCookieConsentNotSetWithLocale(): void
     {
-        $this->formFactory
+        $formFactory = $this->createMock(FormFactoryInterface::class);
+        $formFactory
             ->expects($this->once())
             ->method('create')
             ->with(CookieConsentType::class)
-            ->willReturn($this->createMock(FormInterface::class));
+            ->willReturn($this->createStub(FormInterface::class));
 
-        $this->templating
+        $templating = $this->createMock(Environment::class);
+        $templating
             ->expects($this->once())
             ->method('render')
             ->willReturn('test');
 
-        $locale  = 'lv';
+        $locale = 'lv';
 
         $request = new Request();
-        $request->attributes->set('locale', $locale);
+        $request->attributes->set('_locale', $locale);
 
-        $this->translator
-            ->expects($this->once())
-            ->method('setLocale')
-            ->with($locale);
-
-        $response = $this->cookieConsentController->showIfCookieConsentNotSet($request);
+        $controller = $this->createController(templating: $templating, formFactory: $formFactory);
+        $response = $controller->showIfCookieConsentNotSet($request);
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertSame($locale, $request->getLocale());
     }
 
-    public function testShowIfCookieConsentNotSetWithCookieConsentSet(): void
+    public function testShowWithFormAction(): void
     {
-        $this->formFactory
+        $router = $this->createMock(RouterInterface::class);
+        $router
+            ->expects($this->once())
+            ->method('generate')
+            ->with('test_route')
+            ->willReturn('/test_route');
+
+        $formFactory = $this->createMock(FormFactoryInterface::class);
+        $formFactory
             ->expects($this->once())
             ->method('create')
-            ->with(CookieConsentType::class)
-            ->willReturn($this->createMock(FormInterface::class));
+            ->with(CookieConsentType::class, null, ['action' => '/test_route'])
+            ->willReturn($this->createStub(FormInterface::class));
 
-        $this->templating
+        $templating = $this->createMock(Environment::class);
+        $templating
             ->expects($this->once())
             ->method('render')
             ->willReturn('test');
 
-        $response = $this->cookieConsentController->showIfCookieConsentNotSet(new Request());
+        $controller = $this->createController(
+            templating: $templating,
+            formFactory: $formFactory,
+            router: $router,
+            formAction: 'test_route'
+        );
+
+        $response = $controller->show(new Request());
 
         $this->assertInstanceOf(Response::class, $response);
+    }
+
+    public function testReject(): void
+    {
+        $parameterBag = $this->createMock(ParameterBagInterface::class);
+        $parameterBag
+            ->expects($this->once())
+            ->method('get')
+            ->with('ch_cookie_consent.reject_route_name')
+            ->willReturn('privacy_cookies');
+
+        $router = $this->createMock(RouterInterface::class);
+        $router
+            ->expects($this->once())
+            ->method('generate')
+            ->with('privacy_cookies', [])
+            ->willReturn('/privacy_cookies');
+
+        $controller = $this->createController(router: $router, parameterBag: $parameterBag);
+        $response = $controller->reject();
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertSame(302, $response->getStatusCode());
+        $this->assertSame('/privacy_cookies', $response->headers->get('Location'));
     }
 }

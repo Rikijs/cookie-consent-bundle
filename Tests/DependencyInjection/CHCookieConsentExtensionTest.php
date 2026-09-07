@@ -56,7 +56,7 @@ class CHCookieConsentExtensionTest extends TestCase
     protected function getFullConfig(): array
     {
         $yaml = <<<EOF
-categories: ['necessary', 'functional', 'analytics', 'marketing']
+cookie_categories: ['necessary', 'functional', 'analytics', 'marketing']
 EOF;
         return (new Parser())->parse($yaml);
     }
@@ -94,5 +94,6 @@ final class TestableCHCookieConsentExtension extends CHCookieConsentExtension
         $container->setParameter('ch_cookie_consent.cookie_categories', $config['cookie_categories']);
         $container->setParameter('ch_cookie_consent.form_action', $config['form_action']);
         $container->setParameter('ch_cookie_consent.csrf_protection', $config['csrf_protection']);
+        $container->setParameter('ch_cookie_consent.reject_route_name', $config['reject_route_name']);
     }
 }

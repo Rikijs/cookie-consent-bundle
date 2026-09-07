@@ -11,20 +11,18 @@ namespace ConnectHolland\CookieConsentBundle\Tests\Form;
 
 use ConnectHolland\CookieConsentBundle\Cookie\CookieChecker;
 use ConnectHolland\CookieConsentBundle\Form\CookieConsentType;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 class CookieConsentTypeSimplifiedTest extends TypeTestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $cookieChecker;
+    private CookieChecker $cookieChecker;
 
     protected function setUp(): void
     {
-        $this->cookieChecker = $this->createMock(CookieChecker::class);
+        $this->cookieChecker = $this->createStub(CookieChecker::class);
 
         parent::setUp();
     }

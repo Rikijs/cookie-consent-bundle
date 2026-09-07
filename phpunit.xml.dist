@@ -6,6 +6,10 @@
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnPhpunitNotices="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnPhpunitDeprecations="true"
 >
     <testsuites>
         <testsuite name="Project Test Suite">

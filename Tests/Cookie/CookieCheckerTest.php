@@ -19,28 +19,16 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CookieCheckerTest extends TestCase
 {
-    /**
-     * @var Stub
-     */
-    private $request;
-
-    /**
-     * @var Stub
-     */
-    private $requestStack;
-
-    /**
-     * @var CookieChecker
-     */
-    private $cookieChecker;
+    private Request $request;
+    private RequestStack $requestStack;
+    private CookieChecker $cookieChecker;
 
     protected function setUp(): void
     {
         $this->requestStack = $this->createStub(RequestStack::class);
-        $this->request = $this->createStub(Request::class);
+        $this->request = new Request();
 
         $this->requestStack
-            ->expects($this->any())
             ->method('getCurrentRequest')
             ->willReturn($this->request);
 
