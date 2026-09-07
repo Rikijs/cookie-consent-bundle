@@ -5,8 +5,8 @@
     "license": "MIT",
     "require": {
         "php": ">=8.4",
-        "doctrine/doctrine-bundle": "^2.13",
-        "doctrine/orm": "^3.3",
+        "doctrine/doctrine-bundle": "^3",
+        "doctrine/orm": "^3.6.8",
         "symfony/asset": "^7.4 || ^8.1",
         "symfony/dependency-injection": "^7.4 || ^8.1",
         "symfony/doctrine-bridge": "^7.4 || ^8.1",
