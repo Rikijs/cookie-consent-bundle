@@ -8,7 +8,7 @@
             {% if chcookieconsent_isCookieConsentSavedByUser() == false %}
                 {% include '@CHCookieConsent/privacy/_cookie_consent_header.html.twig' %}
 
-                <p class="text-dark fst-italic">{{- 'ch_cookie_consent.cookies_settings_are_not_saved_yet'|trans({}, 'CHCookieConsentBundle') -}}</p>
+                <p class="text-dark fst-italic text-danger">{{- 'ch_cookie_consent.cookies_settings_are_not_saved_yet'|trans({}, 'CHCookieConsentBundle') -}}</p>
                 <p class="text-dark">{{- 'ch_cookie_consent.adjust_consent_in_this_section'|trans({}, 'CHCookieConsentBundle') -}}</p>
 
                 {{ render_esi(path('ch_cookie_consent.show_if_cookie_consent_not_set', { '_locale': app.locale })) }}
