@@ -35,7 +35,7 @@ jobs:
                   tools: composer:v2
                   extensions: mbstring, intl
 
-            # Necessaru for `Composer` to know that `platform reqs` of old packages may  be ignored
+            # Necessary for `Composer` to know that `platform reqs` of old packages may  be ignored
             - name: Validate composer.json
               run: composer validate --strict
 
