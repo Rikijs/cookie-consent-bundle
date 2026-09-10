@@ -1,0 +1,47 @@
+{
+    "name": "connectholland/cookie-consent-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony bundle for implementing Cookie Consent to comply to AVG/GDPR.",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "doctrine/doctrine-bundle": "^3",
+        "doctrine/orm": "^3.6.8",
+        "symfony/asset": "^7.4 || ^8.1",
+        "symfony/dependency-injection": "^7.4 || ^8.1",
+        "symfony/doctrine-bridge": "^7.4 || ^8.1",
+        "symfony/expression-language": "^7.4 || ^8.1",
+        "symfony/form": "^7.4 || ^8.1",
+        "symfony/framework-bundle": "^7.4 || ^8.1",
+        "symfony/http-foundation": "^7.4 || ^8.1",
+        "symfony/routing": "^7.4 || ^8.1",
+        "symfony/stimulus-bundle": "^2.0 || ^3.0",
+        "symfony/translation": "^7.4 || ^8.1",
+        "symfony/twig-bridge": "^7.4 || ^8.1",
+        "symfony/twig-bundle": "^7.4 || ^8.1",
+        "twig/twig": "^3.28"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpunit/phpunit": "^10.5 || ^11.0 || ^12.0",
+        "rector/rector": "^2.6",
+        "symfony/yaml": "^7.4 || ^8.1"
+    },
+    "prefer-stable": true,
+    "autoload": {
+        "exclude-from-classmap": [
+            "/Tests/"
+        ],
+        "psr-4": {
+            "ConnectHolland\\CookieConsentBundle\\": ""
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ConnectHolland\\CookieConsentBundle\\Tests\\": "/Tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
