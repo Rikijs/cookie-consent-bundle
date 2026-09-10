@@ -5,7 +5,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "doctrine/doctrine-bundle": "^3",
+        "doctrine/doctrine-bundle": "^2.19.0",
         "doctrine/orm": "^3.6.8",
         "symfony/asset": "^7.4 || ^8.1",
         "symfony/dependency-injection": "^7.4 || ^8.1",
