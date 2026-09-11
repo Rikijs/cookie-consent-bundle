@@ -19,6 +19,11 @@
             {% endfor %}
         </div>
         <div class="ch-cookie-consent__btn-group mt-3">
+            {# LINK BUTTON #}
+            <a class="btn btn-primary me-2" href="{{ path('ConnectHolland\\CookieConsentBundle\\Controller\\CookieConsentController::reject') }}">
+                {{- 'ch_cookie_consent.reject_all_cookies'|trans({}, 'CHCookieConsentBundle') -}}
+            </a>
+            {# FORM BUTTON #}
             {% for child in form %}
                 {% if child.vars.block_prefixes[0] === 'button' %}
                     {{ form_widget(child, {
@@ -29,9 +34,9 @@
                     }) }}
                 {% endif %}
             {% endfor %}
-
-            <a class="btn btn-primary" href="{{ path('ConnectHolland\\CookieConsentBundle\\Controller\\CookieConsentController::reject') }}">
-                {{- 'ch_cookie_consent.reject_all_cookies'|trans({}, 'CHCookieConsentBundle') -}}
+            {# LINK BUTTON #}
+            <a class="btn btn-primary ms-1" href="{{ path('ConnectHolland\\CookieConsentBundle\\Controller\\CookieConsentController::reject') }}">
+                {{- 'ch_cookie_consent.accept_all_cookies'|trans({}, 'CHCookieConsentBundle') -}}
             </a>
         </div>
     {{ form_end(form) }}
