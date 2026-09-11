@@ -29,6 +29,7 @@ ch_cookie_consent:
     yes: 'Jā'
     save: 'Saglabāt manu izlasi'
     reject_all_cookies: 'Noraidīt visas sīkdatnes'
+    accept_all_cookies: 'Atļaut visas sīkdatnes'
     change: 'Mainīt izvēli'
     use_only_necessary_cookies: 'Lietot tikai nepieciešamās sīkdatnes'
     use_only_functional_cookies: 'Lietot tikai funkcionalās sīkdatnes'
