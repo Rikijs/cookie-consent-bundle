@@ -10,9 +10,11 @@ declare(strict_types=1);
 namespace ConnectHolland\CookieConsentBundle\Controller;
 
 use ConnectHolland\CookieConsentBundle\Cookie\CookieChecker;
+use ConnectHolland\CookieConsentBundle\Enum\CookieNameEnum;
 use ConnectHolland\CookieConsentBundle\Form\CookieConsentType;
 use DateInterval;
 use DateTime;
+use Random\RandomException;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -58,9 +60,10 @@ class CookieConsentController
 
     /**
      * Accept all consent cookies.
+     * @throws RandomException
      */
     #[Route('/cookie_acccept_all', name: 'ch_cookie_consent.accept')]
-    public function acceptAll(): Response
+    public function acceptAll(Request $request): Response
     {
         // 1. Getting route name for redirect to `set` route
         $acceptRouteName = $this->parameterBag->get('ch_cookie_consent.landing_accept_route') ?? 'homepage';
@@ -72,11 +75,14 @@ class CookieConsentController
         $expirationDateTime->add($expirationInterval);
         $expirationTimestamp = $expirationDateTime->getTimestamp();
 
-        // 3. Create and add main accept cookies
-        $response->headers->setCookie(new Cookie('Cookie_Consent', 'true', $expirationTimestamp, '/', null, true, true));
-        $response->headers->setCookie(new Cookie('Cookie_Consent_Key', 'accepted_all', $expirationTimestamp, '/', null, true, true));
+        // 3. get or set a cookie key
+        $cookieRandomKey = $request->cookies->get(CookieNameEnum::COOKIE_CONSENT_KEY_NAME) ?? bin2hex(random_bytes(16));
 
-        // 4. Create and add category cookies
+        // 4. Create and add main accept cookies
+        $response->headers->setCookie(new Cookie('Cookie_Consent', 'true', $expirationTimestamp, '/', null, true, true));
+        $response->headers->setCookie(new Cookie('Cookie_Consent_Key', $cookieRandomKey, $expirationTimestamp, '/', null, true, true));
+
+        // 5. Create and add category cookies
         $response->headers->setCookie(new Cookie('Cookie_Category_necessary', 'true', $expirationTimestamp, '/', null, true, false));
         $response->headers->setCookie(new Cookie('Cookie_Category_functional', 'true', $expirationTimestamp, '/', null, true, false));
         $response->headers->setCookie(new Cookie('Cookie_Category_analytics', 'true', $expirationTimestamp, '/', null, true, false));
@@ -153,5 +159,14 @@ class CookieConsentController
         $url = $this->router->generate($route, $parameters);
 
         return new RedirectResponse($url, $status);
+    }
+
+    /**
+     * Return an existing key from cookies or create a new one.
+     * @throws RandomException
+     */
+    protected function getCookieConsentKey(Request $request): string
+    {
+        return $request->cookies->get(CookieNameEnum::COOKIE_CONSENT_KEY_NAME) ?? bin2hex(random_bytes(16));
     }
 }
