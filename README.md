@@ -29,8 +29,8 @@ ch_cookie_consent:
     csrf_protection: true # The cookie consent form is csrf protected or not
     
     # When set, the user will be redirected to this route when accepting/rejecting all cookies
-    # landing page for reject: 'privacy_cookies' or 'privacy_accept'
-    # landing page for reject: 'privacy_cookies' or 'privacy_reject'
+    # landing accept page: 'privacy_cookies' or 'privacy_accept'
+    # landing reject page: 'privacy_cookies' or 'privacy_reject'
     landing_accept_route: 'privacy_accept_all'
     landing_reject_route: 'privacy_reject_all'
 ```
