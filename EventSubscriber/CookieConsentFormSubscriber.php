@@ -41,6 +41,7 @@ class CookieConsentFormSubscriber implements EventSubscriberInterface
 
     /**
      * Checks if a form has been submitted and saves users' preferences in cookies by calling the CookieHandler.
+     * @throws RandomException
      */
     public function onResponse(KernelEvent $event): void
     {
@@ -52,7 +53,7 @@ class CookieConsentFormSubscriber implements EventSubscriberInterface
         if (!($event instanceof ResponseEvent)) {
             throw new \RuntimeException('No ResponseEvent class found');
         }
-        $request  = $event->getRequest();
+        $request = $event->getRequest();
         $response = $event->getResponse();
 
         $form = $this->createCookieConsentForm();

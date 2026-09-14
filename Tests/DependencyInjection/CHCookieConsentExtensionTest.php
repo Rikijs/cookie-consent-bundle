@@ -94,6 +94,7 @@ final class TestableCHCookieConsentExtension extends CHCookieConsentExtension
         $container->setParameter('ch_cookie_consent.cookie_categories', $config['cookie_categories']);
         $container->setParameter('ch_cookie_consent.form_action', $config['form_action']);
         $container->setParameter('ch_cookie_consent.csrf_protection', $config['csrf_protection']);
-        $container->setParameter('ch_cookie_consent.reject_route_name', $config['reject_route_name']);
+        $container->setParameter('ch_cookie_consent.landing_accept_route', $config['landing_accept_route']);
+        $container->setParameter('ch_cookie_consent.landing_reject_route', $config['landing_reject_route']);
     }
 }

@@ -144,13 +144,13 @@ class CookieConsentControllerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
     }
 
-    public function testReject(): void
+    public function testAcceptAll(): void
     {
         $parameterBag = $this->createMock(ParameterBagInterface::class);
         $parameterBag
             ->expects($this->once())
             ->method('get')
-            ->with('ch_cookie_consent.reject_route_name')
+            ->with('ch_cookie_consent.landing_accept_route')
             ->willReturn('privacy_cookies');
 
         $router = $this->createMock(RouterInterface::class);
@@ -161,7 +161,31 @@ class CookieConsentControllerTest extends TestCase
             ->willReturn('/privacy_cookies');
 
         $controller = $this->createController(router: $router, parameterBag: $parameterBag);
-        $response = $controller->reject();
+        $response = $controller->acceptAll();
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertSame(302, $response->getStatusCode());
+        $this->assertSame('/privacy_cookies', $response->headers->get('Location'));
+    }
+
+    public function testRejectAll(): void
+    {
+        $parameterBag = $this->createMock(ParameterBagInterface::class);
+        $parameterBag
+            ->expects($this->once())
+            ->method('get')
+            ->with('ch_cookie_consent.landing_reject_route')
+            ->willReturn('privacy_cookies');
+
+        $router = $this->createMock(RouterInterface::class);
+        $router
+            ->expects($this->once())
+            ->method('generate')
+            ->with('privacy_cookies', [])
+            ->willReturn('/privacy_cookies');
+
+        $controller = $this->createController(router: $router, parameterBag: $parameterBag);
+        $response = $controller->rejectAll();
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(302, $response->getStatusCode());

@@ -11,8 +11,11 @@ namespace ConnectHolland\CookieConsentBundle\Controller;
 
 use ConnectHolland\CookieConsentBundle\Cookie\CookieChecker;
 use ConnectHolland\CookieConsentBundle\Form\CookieConsentType;
+use DateInterval;
+use DateTime;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -54,12 +57,41 @@ class CookieConsentController
     }
 
     /**
+     * Accept all consent cookies.
+     */
+    #[Route('/cookie_acccept_all', name: 'ch_cookie_consent.accept')]
+    public function acceptAll(): Response
+    {
+        // 1. Getting route name for redirect to `set` route
+        $acceptRouteName = $this->parameterBag->get('ch_cookie_consent.landing_accept_route') ?? 'homepage';
+        $response = $this->redirectToRoute($acceptRouteName);
+
+        // 2. Set period to: 1 year
+        $expirationInterval = new DateInterval('P1Y');
+        $expirationDateTime = new DateTime();
+        $expirationDateTime->add($expirationInterval);
+        $expirationTimestamp = $expirationDateTime->getTimestamp();
+
+        // 3. Create and add main accept cookies
+        $response->headers->setCookie(new Cookie('Cookie_Consent', 'true', $expirationTimestamp, '/', null, true, true));
+        $response->headers->setCookie(new Cookie('Cookie_Consent_Key', 'accepted_all', $expirationTimestamp, '/', null, true, true));
+
+        // 4. Create and add category cookies
+        $response->headers->setCookie(new Cookie('Cookie_Category_necessary', 'true', $expirationTimestamp, '/', null, true, false));
+        $response->headers->setCookie(new Cookie('Cookie_Category_functional', 'true', $expirationTimestamp, '/', null, true, false));
+        $response->headers->setCookie(new Cookie('Cookie_Category_analytics', 'true', $expirationTimestamp, '/', null, true, false));
+        $response->headers->setCookie(new Cookie('Cookie_Category_marketing', 'true', $expirationTimestamp, '/', null, true, false));
+
+        return $response;
+    }
+
+    /**
      * Reject all previously set cookies.
      */
-    #[Route('/cookie_reject', name: 'ch_cookie_consent.reject')]
-    public function reject(): Response
+    #[Route('/cookie_reject_all', name: 'ch_cookie_consent.reject')]
+    public function rejectAll(): Response
     {
-        $rejectRouteName = $this->parameterBag->get('ch_cookie_consent.reject_route_name');
+        $rejectRouteName = $this->parameterBag->get('ch_cookie_consent.landing_reject_route');
         $response = $this->redirectToRoute($rejectRouteName);
 
         $response->headers->clearCookie('Cookie_Consent');

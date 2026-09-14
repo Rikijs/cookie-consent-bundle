@@ -28,10 +28,16 @@ ch_cookie_consent:
     form_action: ~ # $routeName # When set, xhr-Requests will only be sent to this route. Take care of having the route available.
     csrf_protection: true # The cookie consent form is csrf protected or not
     
-    # When set, the user will be redirected to this route when rejecting all cookies
+    # When set, the user will be redirected to this route when accepting/rejecting all cookies
+    # landing page for reject: 'privacy_cookies' or 'privacy_accept'
     # landing page for reject: 'privacy_cookies' or 'privacy_reject'
-    reject_route_name: 'privacy_reject'
+    landing_accept_route: 'privacy_accept_all'
+    landing_reject_route: 'privacy_reject_all'
 ```
+<br><br>
+# Cookie Consent Bundle for Symfony: Simon Chabrier version README
+___
+<br><br>
 
 # Simon Chabrier - Forked Version: 1.0.0 compatible with Symfony 7.* and PHP 8.*
 
@@ -93,9 +99,10 @@ To use this fork instead of the official `connectholland/cookie-consent-bundle`,
 ```bash
 composer require connectholland/cookie-consent-bundle:dev-master
 ```
-
-
---------------------------------------# Cookie Consent Bundle for Symfony Original README #--------------------------------
+<br><br>
+# Cookie Consent Bundle for Symfony: Original README
+___
+<br><br>
 
 [![Latest Stable Version](https://poser.pugx.org/connectholland/cookie-consent-bundle/v/stable)](https://packagist.org/packages/connectholland/cookie-consent-bundle)
 [![Total Downloads](https://poser.pugx.org/connectholland/cookie-consent-bundle/downloads)](https://packagist.org/packages/connectholland/cookie-consent-bundle)

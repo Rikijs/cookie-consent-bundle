@@ -38,11 +38,13 @@ class CookieHandler
      */
     protected function saveCookie(string $name, string $value, Response $response): void
     {
-        $expirationDate = new DateTime();
-        $expirationDate->add(new DateInterval('P1Y'));
+        $expirationInterval = new DateInterval('P1Y');
+        $expirationDateTime = new DateTime();
+        $expirationDateTime->add($expirationInterval);
+        $expirationTimestamp = $expirationDateTime->getTimestamp();
 
         $response->headers->setCookie(
-            new Cookie($name, $value, $expirationDate, '/', null, null, $this->httpOnly, true)
+            new Cookie($name, $value, $expirationTimestamp, '/', null, true, $this->httpOnly, true)
         );
     }
 }
