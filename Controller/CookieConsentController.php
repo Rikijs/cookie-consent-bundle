@@ -63,7 +63,7 @@ class CookieConsentController
      * Accept all consent cookies.
      * @throws RandomException
      */
-    #[Route('/cookie_acccept_all', name: 'ch_cookie_consent.accept')]
+    #[Route('/cookie_accept_all', name: 'ch_cookie_consent.accept')]
     public function acceptAll(Request $request): Response
     {
         // 1. Getting route name for redirect to `set` route
