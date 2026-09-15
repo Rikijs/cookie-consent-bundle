@@ -12,6 +12,7 @@ namespace ConnectHolland\CookieConsentBundle\Cookie;
 use ConnectHolland\CookieConsentBundle\Enum\CookieNameEnum;
 use DateInterval;
 use DateTime;
+use DateTimeZone;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -41,6 +42,7 @@ class CookieHandler
         $expirationInterval = new DateInterval('P1Y');
         $expirationDateTime = new DateTime();
         $expirationDateTime->add($expirationInterval);
+        $expirationDateTime->setTimezone(new DateTimeZone('Europe/Riga'));
         $expirationTimestamp = $expirationDateTime->getTimestamp();
 
         $response->headers->setCookie(

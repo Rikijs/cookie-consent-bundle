@@ -14,6 +14,7 @@ use ConnectHolland\CookieConsentBundle\Enum\CookieNameEnum;
 use ConnectHolland\CookieConsentBundle\Form\CookieConsentType;
 use DateInterval;
 use DateTime;
+use DateTimeZone;
 use Random\RandomException;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -72,6 +73,7 @@ class CookieConsentController
         // 2. Set period to: 1 year
         $expirationInterval = new DateInterval('P1Y');
         $expirationDateTime = new DateTime();
+        $expirationDateTime->setTimezone(new DateTimeZone('Europe/Riga'));
         $expirationDateTime->add($expirationInterval);
         $expirationTimestamp = $expirationDateTime->getTimestamp();
 
