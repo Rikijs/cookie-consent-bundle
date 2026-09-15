@@ -12,5 +12,5 @@ ch_cookie_consent:
     # When set, the user will be redirected to this route when accepting/rejecting all cookies
     # accept landing page: 'privacy_cookies' or 'privacy_accept'
     # reject landing page: 'privacy_cookies' or 'privacy_reject'
-    landing_reject_route: 'privacy_reject'
     landing_accept_route: 'privacy_accept'
+    landing_reject_route: 'privacy_reject'

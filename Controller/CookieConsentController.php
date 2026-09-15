@@ -162,13 +162,4 @@ class CookieConsentController
 
         return new RedirectResponse($url, $status);
     }
-
-    /**
-     * Return an existing key from cookies or create a new one.
-     * @throws RandomException
-     */
-    protected function getCookieConsentKey(Request $request): string
-    {
-        return $request->cookies->get(CookieNameEnum::COOKIE_CONSENT_KEY_NAME) ?? bin2hex(random_bytes(16));
-    }
 }
