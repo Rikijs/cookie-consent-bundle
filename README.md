@@ -9,12 +9,13 @@
 - Removed themes
 - Removed position option
 - Removed simplified option
-- Added `necessary` cookies (always active type)
-- Using following cookies: `functional`, `analytics`, `marketing`
-- Removed following cookies: `social_media`, `tracking`
+- Removed `social_media`, `tracking` cookie types
+- Added `necessary` cookie type (it is always active)
+- Using following choosable cookies: `functional`, `analytics`, `marketing`
+- added a link that looks like a button for _accepting all cookies_
 - added a link that looks like a button for _rejecting all cookies_
 
-### override Step 4: Configure to your needs
+### override Step 4: Configure your needs
 Configure your Cookie Consent with the following possible settings
 ```yaml
 ch_cookie_consent:
